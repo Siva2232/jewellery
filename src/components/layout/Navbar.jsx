@@ -8,6 +8,9 @@ import { easeLuxury, easeOutExpo } from "../../utils/motion";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [exiting, setExiting] = useState(false);
+
+  const menuActive = open || exiting;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -17,23 +20,66 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+
+    const scrollY = window.scrollY;
+    const { style } = document.body;
+    const prev = {
+      position: style.position,
+      top: style.top,
+      left: style.left,
+      right: style.right,
+      overflow: style.overflow,
+      width: style.width,
+    };
+
+    style.position = "fixed";
+    style.top = `-${scrollY}px`;
+    style.left = "0";
+    style.right = "0";
+    style.overflow = "hidden";
+    style.width = "100%";
+
     return () => {
-      document.body.style.overflow = "";
+      style.position = prev.position;
+      style.top = prev.top;
+      style.left = prev.left;
+      style.right = prev.right;
+      style.overflow = prev.overflow;
+      style.width = prev.width;
+      window.scrollTo(0, scrollY);
     };
   }, [open]);
 
-  const go = (href) => {
+  const closeMenu = () => {
+    if (!open) return;
     setOpen(false);
-    scrollToId(href);
+    setExiting(true);
   };
 
-  const light = !scrolled && !open;
+  const toggleMenu = () => {
+    if (open) {
+      closeMenu();
+      return;
+    }
+    setExiting(false);
+    setOpen(true);
+  };
+
+  const go = (href) => {
+    closeMenu();
+    // Defer scroll until body unlock restores scroll position
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => scrollToId(href));
+    });
+  };
+
+  const light = !scrolled && !menuActive;
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-700 ${
-        scrolled || open
+        scrolled || menuActive
           ? "border-b border-line bg-porcelain/85 shadow-[0_1px_0_rgba(20,17,15,0.04)] backdrop-blur-xl"
           : "bg-transparent"
       }`}
@@ -43,8 +89,12 @@ export default function Navbar() {
           href="#top"
           onClick={(e) => {
             e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            setOpen(false);
+            closeMenu();
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              });
+            });
           }}
           className="relative flex h-[4.25rem] items-center md:h-[5.25rem]"
           aria-label={brand.name}
@@ -93,23 +143,24 @@ export default function Navbar() {
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
           className={`inline-flex h-10 w-10 items-center justify-center transition-colors duration-500 lg:hidden ${
             light ? "text-porcelain" : "text-ink"
           }`}
-          onClick={() => setOpen((v) => !v)}
+          onClick={toggleMenu}
         >
           {open ? <X size={22} strokeWidth={1.25} /> : <Menu size={22} strokeWidth={1.25} />}
         </button>
       </nav>
 
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={() => setExiting(false)}>
         {open && (
           <motion.div
             initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
             animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
-            exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+            exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)", pointerEvents: "none" }}
             transition={{ duration: 0.55, ease: easeLuxury }}
-            className="max-h-[calc(100svh-5.5rem)] overflow-y-auto border-t border-line bg-porcelain lg:hidden"
+            className="absolute inset-x-0 top-full max-h-[calc(100svh-5.5rem)] overflow-y-auto overscroll-contain border-t border-line bg-porcelain lg:hidden"
           >
             <ul className="flex flex-col gap-0.5 px-5 py-8">
               {navLinks.map((link, i) => (
