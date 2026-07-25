@@ -3,7 +3,6 @@ import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { brand, navLinks } from "../../data/jewellery";
 import { scrollToId } from "../../utils/helpers";
-import { easeLuxury, easeOutExpo } from "../../utils/motion";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -68,7 +67,6 @@ export default function Navbar() {
 
   const go = (href) => {
     closeMenu();
-    // Defer scroll until body unlock restores scroll position
     requestAnimationFrame(() => {
       requestAnimationFrame(() => scrollToId(href));
     });
@@ -78,9 +76,9 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-700 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow] duration-300 ${
         scrolled || menuActive
-          ? "border-b border-line bg-porcelain/85 shadow-[0_1px_0_rgba(20,17,15,0.04)] backdrop-blur-xl"
+          ? "border-b border-line bg-porcelain/95 shadow-[0_1px_0_rgba(20,17,15,0.04)]"
           : "bg-transparent"
       }`}
     >
@@ -115,7 +113,7 @@ export default function Navbar() {
                   e.preventDefault();
                   go(link.href);
                 }}
-                className={`link-underline text-[10px] font-medium tracking-[0.16em] uppercase transition-colors duration-500 xl:text-[11px] xl:tracking-[0.18em] ${
+                className={`link-underline text-[10px] font-medium tracking-[0.16em] uppercase transition-colors duration-300 xl:text-[11px] xl:tracking-[0.18em] ${
                   light ? "text-stone hover:text-porcelain" : "text-ink-soft"
                 }`}
               >
@@ -131,7 +129,7 @@ export default function Navbar() {
             e.preventDefault();
             go("#contact");
           }}
-          className={`hidden px-5 py-2.5 text-[11px] font-medium tracking-[0.18em] uppercase transition-all duration-500 lg:inline-block ${
+          className={`hidden px-5 py-2.5 text-[11px] font-medium tracking-[0.18em] uppercase transition-all duration-300 lg:inline-block ${
             light
               ? "border border-porcelain/35 text-porcelain hover:bg-porcelain hover:text-ink"
               : "border border-ink/20 text-ink hover:border-ink hover:bg-ink hover:text-porcelain"
@@ -144,7 +142,7 @@ export default function Navbar() {
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          className={`inline-flex h-10 w-10 items-center justify-center transition-colors duration-500 lg:hidden ${
+          className={`inline-flex h-10 w-10 items-center justify-center transition-colors duration-300 lg:hidden ${
             light ? "text-porcelain" : "text-ink"
           }`}
           onClick={toggleMenu}
@@ -156,24 +154,18 @@ export default function Navbar() {
       <AnimatePresence onExitComplete={() => setExiting(false)}>
         {open && (
           <motion.div
-            initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
-            animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
-            exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)", pointerEvents: "none" }}
-            transition={{ duration: 0.55, ease: easeLuxury }}
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            style={{ willChange: "transform, opacity" }}
             className="absolute inset-x-0 top-full max-h-[calc(100svh-5.5rem)] overflow-y-auto overscroll-contain border-t border-line bg-porcelain lg:hidden"
           >
             <ul className="flex flex-col gap-0.5 px-5 py-8">
               {navLinks.map((link, i) => (
-                <li key={link.href} className="overflow-hidden">
-                  <motion.a
+                <li key={link.href}>
+                  <a
                     href={link.href}
-                    initial={{ y: "100%" }}
-                    animate={{ y: "0%" }}
-                    transition={{
-                      duration: 0.7,
-                      delay: 0.08 + i * 0.05,
-                      ease: easeOutExpo,
-                    }}
                     onClick={(e) => {
                       e.preventDefault();
                       go(link.href);
@@ -186,7 +178,7 @@ export default function Navbar() {
                     <span className="font-display text-sm text-champagne-deep/70 tabular-nums">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                  </motion.a>
+                  </a>
                 </li>
               ))}
               <li className="pt-6">

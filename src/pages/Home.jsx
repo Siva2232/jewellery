@@ -1,4 +1,5 @@
 import Hero from "../components/sections/Hero";
+import JhumkaStory from "../components/sections/JhumkaStory";
 import Categories from "../components/sections/Categories";
 import Featured from "../components/sections/Featured";
 import Collections from "../components/sections/Collections";
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <JhumkaStory />
       <Marquee />
       <Categories />
       <Featured />

@@ -1,3 +1,6 @@
+import jumukkaImg from "../assets/images/jumukka.png";
+import girlImg from "../assets/images/girl.png";
+
 export const brand = {
   name: "ORRA",
   fullName: "ORRA Premium Jewellery",
@@ -318,6 +321,23 @@ export const careSteps = [
       "Give finishes time between occasions — lasting shine prefers patience.",
   },
 ];
+
+export const jhumkaStory = {
+  brand: "ORRA",
+  eyebrow: "The Drop",
+  headline: "Crafted to Tell Your Story",
+  line: "A single jhumka, suspended in light — then worn where elegance begins.",
+  settleLine: "Worn where light lingers.",
+  brandLine: "ORRA · Shine Beyond Gold",
+  cta: { label: "Explore Collection", href: "#collections" },
+  secondaryCta: { label: "View Details", href: "#featured" },
+  jhumka: jumukkaImg,
+  jhumkaAlt: "Gold temple jhumka earring",
+  portrait: girlImg,
+  portraitAlt: "Woman in profile, ear ready for a jhumka",
+  // Tunable: % within the portrait frame where the lobe sits
+  earAnchor: { x: "70%", y: "45%" },
+};
 
 export const hero = {
   headline: "Shine Beyond Gold.",
