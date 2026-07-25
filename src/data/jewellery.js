@@ -1,5 +1,6 @@
 import jumukkaImg from "../assets/images/jumukka.png";
 import girlImg from "../assets/images/girl.png";
+import banglesCardImg from "../assets/images/story/bangles-card.webp";
 
 export const brand = {
   name: "ORRA",
@@ -188,6 +189,17 @@ export const featuredPieces = [
     price: 1990,
     image:
       "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=80",
+  },
+  // Tenth piece. Styled identically to the rest — the scroll story lifts this
+  // one out of the wall, so it must not read as a special card.
+  {
+    id: "meenaxi-bangles",
+    name: "Meenaxi Temple Bangles",
+    category: "bangles",
+    collection: "Bridal",
+    price: 5290,
+    image: banglesCardImg,
+    isStoryPiece: true,
   },
 ];
 

@@ -1,273 +1,377 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { createRef, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { featuredPieces, brand } from "../../data/jewellery";
-import { formatPrice, scrollToId } from "../../utils/helpers";
 import {
-  easeLuxury,
-  easeOutExpo,
-  fadeUp,
-  staggerContainer,
-} from "../../utils/motion";
-import RevealText from "../ui/RevealText";
-import GoldLine from "../ui/GoldLine";
+  STORY_ANCHOR,
+  bangleStoryAssets,
+  bangleStoryCopy,
+  bangleStoryGeometry,
+} from "../../data/bangleStory";
+import { formatPrice, scrollToId } from "../../utils/helpers";
+import useBangleStory from "../../hooks/useBangleStory";
+
+const { patch: PATCH, wrist: WRIST } = bangleStoryGeometry.portrait;
+const { wall, story } = bangleStoryCopy;
+
+/** Gold dust that travels with the flying pair. Purely decorative. */
+const DUST = [
+  { left: "6%", top: "22%", size: 3, delay: "0s", duration: "6s" },
+  { left: "88%", top: "30%", size: 2, delay: "1.1s", duration: "7.5s" },
+  { left: "18%", top: "72%", size: 2.5, delay: "0.5s", duration: "8s" },
+  { left: "78%", top: "78%", size: 2, delay: "1.9s", duration: "6.5s" },
+  { left: "48%", top: "8%", size: 2.5, delay: "0.8s", duration: "9s" },
+  { left: "94%", top: "56%", size: 2, delay: "2.4s", duration: "7s" },
+  { left: "2%", top: "50%", size: 2, delay: "1.4s", duration: "8.5s" },
+  { left: "62%", top: "94%", size: 2.5, delay: "0.2s", duration: "7s" },
+];
 
 export default function Featured() {
-  const reduce = useReducedMotion();
-  const [spotlight, ...rest] = featuredPieces;
-  const total = featuredPieces.length;
+  const [reduce] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+
+  // One stable object so the story hook never re-runs on render.
+  const refs = useRef({
+    section: createRef(),
+    stage: createRef(),
+    decor: createRef(),
+    story: createRef(),
+    copy: createRef(),
+    portraitBox: createRef(),
+    portraitCam: createRef(),
+    portraitBreath: createRef(),
+    patch: createRef(),
+    bloom: createRef(),
+    burst: createRef(),
+    sheen: createRef(),
+    clone: createRef(),
+    cloneGlow: createRef(),
+    cloneDust: createRef(),
+  }).current;
+
+  useBangleStory({ refs, enabled: !reduce });
 
   const enquire = (name) =>
     `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
       `Hi ${brand.name} — I'm interested in the ${name}.`
     )}`;
 
+  const cls = {
+    stage: reduce ? "relative" : "relative h-svh overflow-hidden",
+    wall: reduce
+      ? "relative flex flex-col"
+      : "absolute inset-0 z-[3] flex flex-col px-5 pt-24 pb-6 md:px-8 lg:pt-28 lg:pb-10",
+    grid: reduce
+      ? "mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"
+      : "mt-6 grid min-h-0 flex-1 grid-cols-2 grid-rows-5 gap-2.5 lg:mt-10 lg:grid-cols-5 lg:grid-rows-2 lg:gap-4",
+    frame: reduce ? "aspect-[4/5] w-full" : "h-full w-full",
+    story: reduce
+      ? "relative mt-24 grid items-center gap-12 lg:grid-cols-[0.95fr_1fr]"
+      : "pointer-events-none absolute inset-0 z-[4]",
+    portraitBox: reduce
+      ? "relative order-1 mx-auto aspect-[1024/1536] w-full max-w-sm lg:order-2"
+      : "absolute left-1/2 top-[5%] aspect-[1024/1536] h-[44%] -translate-x-1/2 lg:left-auto lg:right-[5%] lg:top-[54%] lg:h-[82%] lg:translate-x-0 lg:-translate-y-1/2",
+    copy: reduce
+      ? "order-2 lg:order-1"
+      : "absolute inset-x-0 bottom-0 z-[2] px-6 pb-10 text-center lg:inset-x-auto lg:bottom-auto lg:left-[6%] lg:top-1/2 lg:max-w-md lg:-translate-y-1/2 lg:px-0 lg:pb-0 lg:text-left",
+  };
+
   return (
     <section
       id="featured"
-      className="section-pad relative overflow-hidden bg-stone/40"
+      ref={refs.section}
+      className={`relative bg-porcelain ${reduce ? "section-pad" : ""}`}
     >
-      <div className="grain !opacity-[0.035]" />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-champagne/12 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute right-0 bottom-0 h-72 w-72 translate-x-1/4 translate-y-1/4 rounded-full bg-champagne/8 blur-3xl"
-      />
+      <div ref={refs.stage} className={cls.stage}>
+        {/* Backdrop */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,#fbf9f6_0%,#f6f2ec_48%,#e6dfd4_100%)]"
+        />
+        <div ref={refs.decor} aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-40 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-champagne/12 blur-3xl" />
+          <div className="absolute right-0 bottom-0 h-80 w-80 translate-x-1/4 translate-y-1/4 rounded-full bg-champagne/10 blur-3xl" />
+        </div>
+        <div className="grain !opacity-[0.03]" />
 
-      <div className="section-shell relative">
-        {/* Header */}
-        <div className="mb-14 flex flex-col gap-8 md:mb-20 lg:mb-24 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-xl">
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: easeLuxury }}
-              className="flex items-center gap-4"
-            >
-              <p className="eyebrow">Signature pieces</p>
-              <span className="h-px w-10 bg-champagne/60" />
-              <span className="font-display text-sm text-champagne-deep tabular-nums">
-                {String(total).padStart(2, "0")}
-              </span>
-            </motion.div>
-
-            <RevealText
-              text="Selected for the light they hold"
-              className="mt-5 font-display text-4xl tracking-tight text-ink md:text-5xl lg:text-[3.5rem]"
-              delay={0.08}
-            />
-            <GoldLine className="mt-8 w-20" delay={0.3} />
+        {/* ── The collection wall ─────────────────────────────────────────── */}
+        <div className={cls.wall}>
+          <div
+            data-wall-chrome
+            className="section-shell flex shrink-0 flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+          >
+            <div>
+              <div className="flex items-center gap-4">
+                <p className="eyebrow">{wall.eyebrow}</p>
+                <span className="h-px w-10 bg-champagne/60" />
+                <span className="font-display text-sm tabular-nums text-champagne-deep">
+                  {String(featuredPieces.length).padStart(2, "0")}
+                </span>
+              </div>
+              <h2 className="mt-3 font-display text-3xl tracking-tight text-ink md:text-4xl lg:text-[3.1rem]">
+                {wall.heading}
+              </h2>
+            </div>
+            <p className="max-w-xs text-xs leading-relaxed text-ink-muted md:text-sm lg:text-right">
+              {wall.description}
+            </p>
           </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.25, duration: 0.9, ease: easeLuxury }}
-            className="max-w-xs text-sm leading-relaxed text-ink-muted md:text-right"
-          >
-            A curated edit of bridal, festive, and everyday forms — finished for
-            lasting wear.
-          </motion.p>
+          <div className={`section-shell ${cls.grid}`}>
+            {featuredPieces.map((piece, i) => {
+              const isStory = Boolean(piece.isStoryPiece);
+
+              return (
+                <article
+                  key={piece.id}
+                  data-wall-card
+                  data-story-card={isStory || undefined}
+                  className="group relative min-h-0"
+                >
+                  {isStory && (
+                    <span
+                      aria-hidden
+                      className="animate-piece-glow pointer-events-none absolute -inset-4 -z-10 rounded-full bg-champagne/40 blur-2xl"
+                    />
+                  )}
+
+                  <a
+                    href={enquire(piece.name)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative block h-full overflow-hidden transition-[transform,box-shadow] duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-26px_rgba(20,17,15,0.5)]"
+                  >
+                    <div
+                      id={isStory ? STORY_ANCHOR : undefined}
+                      data-story-frame={isStory || undefined}
+                      className={`relative overflow-hidden bg-stone ${cls.frame}`}
+                    >
+                      {/* Hover zoom lives on a wrapper so the story's own
+                          transforms on the image never fight with it. */}
+                      <div className="absolute inset-0 transition-transform duration-[1.3s] ease-out group-hover:scale-[1.06]">
+                        <img
+                          data-story-image={isStory || undefined}
+                          src={piece.image}
+                          alt={piece.name}
+                          loading={i < 5 ? "eager" : "lazy"}
+                          decoding="async"
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                      </div>
+
+                      <div
+                        data-card-chrome={isStory || undefined}
+                        className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-ink/20"
+                      />
+
+                      <div
+                        data-card-chrome={isStory || undefined}
+                        className="absolute inset-x-0 top-0 flex items-start justify-between p-3 lg:p-4"
+                      >
+                        <span className="font-display text-xs text-porcelain/75 lg:text-sm">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="text-[8px] tracking-[0.2em] text-porcelain/60 uppercase opacity-0 transition-opacity duration-500 group-hover:opacity-100 lg:text-[9px]">
+                          {piece.collection}
+                        </span>
+                      </div>
+
+                      <div
+                        data-card-chrome={isStory || undefined}
+                        className="absolute inset-x-0 bottom-0 p-3 lg:p-4"
+                      >
+                        <h3 className="font-display text-sm leading-tight text-porcelain lg:text-lg">
+                          {piece.name}
+                        </h3>
+                        <div className="mt-1 flex items-center justify-between gap-2">
+                          <p className="text-[10px] tabular-nums text-champagne-light lg:text-xs">
+                            {formatPrice(piece.price)}
+                          </p>
+                          <ArrowUpRight
+                            size={13}
+                            strokeWidth={1.4}
+                            className="translate-y-1 text-porcelain/70 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </article>
+              );
+            })}
+          </div>
+
+          {!reduce && (
+            <p
+              data-wall-chrome
+              className="section-shell mt-4 shrink-0 text-center text-[10px] tracking-[0.28em] text-champagne-deep uppercase lg:mt-6"
+            >
+              Keep scrolling
+            </p>
+          )}
         </div>
 
-        {/* Spotlight */}
-        {spotlight && (
-          <motion.a
-            href={enquire(spotlight.name)}
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 1.05, ease: easeLuxury }}
-            className="group relative mb-6 block overflow-hidden bg-ink md:mb-8 lg:mb-10"
-          >
-            <div className="relative grid lg:grid-cols-[1.35fr_0.9fr]">
-              <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[5/4] lg:aspect-auto lg:min-h-[560px]">
-                <motion.img
-                  src={spotlight.image}
-                  alt={spotlight.name}
-                  loading="eager"
+        {/* ── The story ───────────────────────────────────────────────────── */}
+        <div ref={refs.story} className={cls.story}>
+          <div ref={refs.portraitBox} className={cls.portraitBox}>
+            <div ref={refs.portraitCam} className="story-layer relative h-full w-full">
+              <div ref={refs.portraitBreath} className="story-layer relative h-full w-full">
+                <img
+                  src={bangleStoryAssets.portrait}
+                  alt="Model wearing the Meenaxi temple bangles"
+                  loading="lazy"
                   decoding="async"
                   className="absolute inset-0 h-full w-full object-cover"
-                  initial={reduce ? false : { scale: 1.14 }}
-                  whileInView={reduce ? undefined : { scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.6, ease: easeLuxury }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-ink/20 lg:to-ink/55" />
-                <div className="absolute inset-0 bg-ink/0 transition-colors duration-700 group-hover:bg-ink/15" />
-              </div>
 
-              <div className="relative flex flex-col justify-between gap-10 bg-ink px-6 py-8 text-porcelain sm:px-8 sm:py-10 lg:px-12 lg:py-14">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-[10px] tracking-[0.28em] text-champagne-light uppercase">
-                      01 · Featured
-                    </p>
-                    <p className="mt-3 text-[10px] tracking-[0.22em] text-porcelain/45 uppercase">
-                      {spotlight.collection}
-                    </p>
-                  </div>
-                  <span className="flex h-10 w-10 items-center justify-center border border-porcelain/25 text-porcelain transition-all duration-500 group-hover:border-champagne group-hover:text-champagne">
-                    <ArrowUpRight
-                      size={16}
-                      strokeWidth={1.4}
-                      className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </span>
-                </div>
+                {/* Bare-wrist plate, pixel-aligned to the portrait. Fading this
+                    out is what makes the bangles appear on her wrist. */}
+                <img
+                  ref={refs.patch}
+                  src={bangleStoryAssets.wristBare}
+                  alt=""
+                  aria-hidden
+                  loading="lazy"
+                  decoding="async"
+                  className={`story-layer absolute ${reduce ? "opacity-0" : ""}`}
+                  style={{
+                    left: `${PATCH.left}%`,
+                    top: `${PATCH.top}%`,
+                    width: `${PATCH.width}%`,
+                    height: `${PATCH.height}%`,
+                  }}
+                />
 
-                <div>
-                  <h3 className="font-display text-4xl leading-[1.05] tracking-tight sm:text-5xl lg:text-[3.35rem]">
-                    {spotlight.name}
-                  </h3>
-                  <div className="mt-6 flex items-end justify-between gap-4 border-t border-porcelain/15 pt-6">
-                    <p className="text-sm tabular-nums text-champagne-light">
-                      {formatPrice(spotlight.price)}
-                    </p>
-                    <span className="text-[11px] font-medium tracking-[0.22em] text-porcelain/70 uppercase transition-colors duration-400 group-hover:text-champagne-light">
-                      Enquire
-                      <span className="ml-2 inline-block transition-transform duration-500 group-hover:translate-x-1">
-                        →
-                      </span>
-                    </span>
-                  </div>
+                <div
+                  ref={refs.bloom}
+                  aria-hidden
+                  className="story-layer pointer-events-none absolute rounded-full bg-champagne-light/50 opacity-0 mix-blend-screen blur-2xl"
+                  style={{ left: `${WRIST.x}%`, top: `${WRIST.y}%`, width: "26%", height: "18%" }}
+                />
+                <div
+                  ref={refs.burst}
+                  aria-hidden
+                  className="story-layer pointer-events-none absolute rounded-full border border-champagne-light/45 opacity-0"
+                  style={{ left: `${WRIST.x}%`, top: `${WRIST.y}%`, width: "14%", height: "10%" }}
+                />
+
+                {/* Reflection pass, clipped to the jewellery itself so it reads
+                    as metal catching the light, not a flash across her arm. */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute overflow-hidden rounded-full"
+                  style={{
+                    left: `${WRIST.x - 6.5}%`,
+                    top: `${WRIST.y - 4.25}%`,
+                    width: "13%",
+                    height: "8.5%",
+                  }}
+                >
+                  {/* Screen blend so it lifts the gold instead of painting the
+                      skin white. */}
+                  <div
+                    ref={refs.sheen}
+                    className="story-layer absolute -inset-y-1/2 left-0 w-1/3 bg-gradient-to-r from-transparent via-champagne-light/80 to-transparent opacity-0 mix-blend-screen"
+                  />
                 </div>
               </div>
             </div>
-          </motion.a>
-        )}
+          </div>
 
-        {/* Grid */}
-        <motion.div
-          className="grid gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.06 }}
-          variants={staggerContainer}
-        >
-          {rest.map((piece, i) => {
-            const index = String(i + 2).padStart(2, "0");
-            const tall = i % 3 === 1;
+          {!reduce && (
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[54%] bg-gradient-to-t from-porcelain via-porcelain/92 to-transparent lg:hidden"
+            />
+          )}
 
-            return (
-              <motion.article
-                key={piece.id}
-                variants={fadeUp}
-                custom={i * 0.06}
-                className={`group ${tall ? "lg:mt-10" : ""}`}
+          <div ref={refs.copy} className={cls.copy}>
+            <p data-story-copy className="eyebrow">
+              {story.eyebrow}
+            </p>
+            <h2
+              data-story-copy
+              className="mt-4 font-display text-3xl leading-[1.08] tracking-tight text-ink text-balance sm:text-4xl lg:text-[3.4rem]"
+            >
+              {story.heading}
+            </h2>
+            <p
+              data-story-copy
+              className="mt-4 max-w-md text-sm leading-relaxed text-ink-muted lg:mt-6 lg:text-base"
+            >
+              {story.paragraph}
+            </p>
+            <div
+              data-story-copy
+              className="mt-7 flex flex-wrap items-center justify-center gap-3 lg:mt-10 lg:justify-start"
+            >
+              <button
+                type="button"
+                onClick={() => scrollToId(story.primaryCta.href)}
+                className="btn-luxe-fill pointer-events-auto min-w-[11rem]"
               >
-                <a
-                  href={enquire(piece.name)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <div
-                    className={`relative overflow-hidden bg-stone ${
-                      tall ? "aspect-[3/4]" : "aspect-[4/5]"
-                    }`}
-                  >
-                    <motion.img
-                      src={piece.image}
-                      alt={piece.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.06]"
-                      initial={reduce ? false : { scale: 1.12 }}
-                      whileInView={reduce ? undefined : { scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{
-                        duration: 1.45,
-                        delay: 0.05 + i * 0.04,
-                        ease: easeLuxury,
-                      }}
-                    />
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent opacity-60 transition-opacity duration-700 group-hover:opacity-90" />
-
-                    <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4 md:p-5">
-                      <span className="font-display text-sm text-porcelain/80">
-                        {index}
-                      </span>
-                      <span className="text-[9px] tracking-[0.22em] text-porcelain/55 uppercase opacity-0 transition-opacity duration-500 group-hover:opacity-100 md:text-[10px]">
-                        {piece.collection}
-                      </span>
-                    </div>
-
-                    <div className="absolute inset-x-0 bottom-0 flex translate-y-2 items-end justify-between p-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 md:p-5">
-                      <span className="border border-porcelain/40 bg-porcelain/10 px-4 py-2 text-[10px] tracking-[0.2em] text-porcelain uppercase backdrop-blur-sm">
-                        Enquire
-                      </span>
-                      <ArrowUpRight
-                        size={16}
-                        strokeWidth={1.35}
-                        className="text-porcelain/80"
-                      />
-                    </div>
-
-                    <motion.span
-                      aria-hidden
-                      className="absolute inset-x-4 bottom-0 h-px origin-left bg-champagne/80 md:inset-x-5"
-                      initial={{ scaleX: 0 }}
-                      whileInView={{ scaleX: 1 }}
-                      viewport={{ once: true }}
-                      transition={{
-                        duration: 0.9,
-                        delay: 0.25 + i * 0.05,
-                        ease: easeOutExpo,
-                      }}
-                    />
-                  </div>
-
-                  <div className="mt-5 flex items-start justify-between gap-4">
-                    <div className="min-w-0">
-                      <p className="text-[10px] font-medium tracking-[0.24em] text-champagne-deep uppercase">
-                        {piece.collection}
-                      </p>
-                      <h3 className="mt-2 font-display text-[1.55rem] leading-tight text-ink transition-colors duration-400 group-hover:text-ink-soft md:text-[1.7rem]">
-                        {piece.name}
-                      </h3>
-                    </div>
-                    <p className="shrink-0 pt-1 text-sm tabular-nums text-ink-muted">
-                      {formatPrice(piece.price)}
-                    </p>
-                  </div>
-                </a>
-              </motion.article>
-            );
-          })}
-        </motion.div>
-
-        {/* Footer cue */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.85, delay: 0.15, ease: easeLuxury }}
-          className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-line pt-10 sm:flex-row sm:items-center md:mt-20 md:pt-12"
-        >
-          <p className="max-w-sm text-sm leading-relaxed text-ink-muted">
-            Looking for something made to measure? Tell us the occasion — we
-            will shape the piece around it.
-          </p>
-          <button
-            type="button"
-            onClick={() => scrollToId("#contact")}
-            className="btn-luxe-ghost group"
-          >
-            <span>Talk to us</span>
-            <span className="ml-3 inline-block transition-transform duration-500 group-hover:translate-x-1">
-              →
-            </span>
-          </button>
-        </motion.div>
+                {story.primaryCta.label}
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToId(story.secondaryCta.href)}
+                className="btn-luxe-ghost pointer-events-auto min-w-[11rem]"
+              >
+                {story.secondaryCta.label}
+              </button>
+            </div>
+            <p
+              data-story-copy
+              className="mt-6 hidden text-[10px] tracking-[0.26em] text-champagne-deep uppercase sm:block lg:mt-8"
+            >
+              {story.caption}
+            </p>
+          </div>
+        </div>
       </div>
+
+      {/* ── The flying pair ─────────────────────────────────────────────────
+          Lives outside the clipped stage. Position and size are written once
+          from the card's measured rect; the flight is transform only. */}
+      {!reduce && (
+        <div
+          ref={refs.clone}
+          aria-hidden
+          className="story-layer pointer-events-none fixed top-0 left-0 z-[60] opacity-0"
+        >
+          <div
+            ref={refs.cloneGlow}
+            className="pointer-events-none absolute -inset-[20%] rounded-full bg-[radial-gradient(circle,rgba(221,196,154,0.5),rgba(201,169,110,0.16)_45%,transparent_70%)] opacity-0 blur-xl"
+          />
+          <img
+            src={bangleStoryAssets.cutout}
+            alt=""
+            decoding="async"
+            className="relative h-full w-full object-contain drop-shadow-[0_26px_48px_rgba(120,92,42,0.45)]"
+          />
+          <div
+            ref={refs.cloneDust}
+            className="pointer-events-none absolute -inset-[32%] opacity-0 motion-reduce:hidden"
+          >
+            {DUST.map((d, i) => (
+              <span
+                key={i}
+                className="animate-gold-dust absolute rounded-full bg-champagne-light/80 shadow-[0_0_7px_rgba(221,196,154,0.8)]"
+                style={{
+                  left: d.left,
+                  top: d.top,
+                  width: d.size,
+                  height: d.size,
+                  animationDelay: d.delay,
+                  animationDuration: d.duration,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
