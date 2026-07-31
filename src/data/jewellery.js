@@ -790,6 +790,10 @@ export const jhumkaStory = {
 };
 
 export const hero = {
+  headline: "Shine Beyond Gold.",
+  subline:
+    "Premium imitation gold jewellery for bridal, festive, and everyday moments — composed with restraint and lasting finish.",
+  cta: "Shop categories",
   ctaHref: "#categories",
   secondaryCta: "View pieces",
   secondaryCtaHref: "#featured",

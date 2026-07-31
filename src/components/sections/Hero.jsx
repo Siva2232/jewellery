@@ -108,7 +108,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.div
-            className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-5 md:mt-10 lg:mt-12 lg:justify-start"
+            className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:mt-10 lg:mt-12 lg:justify-start"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, delay: 2.75, ease: easeLuxury }}
@@ -132,7 +132,7 @@ export default function Hero() {
                 e.preventDefault();
                 scrollToId(hero.secondaryCtaHref);
               }}
-              className="link-underline text-[11px] font-medium tracking-[0.2em] text-stone uppercase"
+              className="btn-luxe-light"
             >
               {hero.secondaryCta}
             </a>

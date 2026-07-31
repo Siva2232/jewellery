@@ -42,12 +42,13 @@ export default function Categories() {
     )}`;
 
   return (
-    <section id="categories" className="relative overflow-hidden bg-porcelain">
+    <section id="categories" className="relative overflow-x-hidden bg-porcelain">
       <div className="pointer-events-none absolute -top-32 right-0 h-[28rem] w-[28rem] rounded-full bg-champagne/10 blur-3xl" />
 
-      <div className="section-shell section-pad relative">
-        <div className="mb-12 flex flex-col gap-8 md:mb-16 lg:mb-20 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
+      <div className="section-shell section-pad relative !px-4 sm:!px-5 md:!px-8">
+        {/* Header */}
+        <div className="mb-8 flex flex-col gap-5 md:mb-14 md:gap-8 lg:mb-20 lg:flex-row lg:items-end lg:justify-between">
+          <div className="min-w-0 max-w-2xl">
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -59,7 +60,7 @@ export default function Categories() {
             </motion.p>
             <RevealText
               text="Find your form"
-              className="mt-4 font-display text-4xl tracking-tight text-ink sm:text-5xl md:text-6xl lg:text-[4.25rem]"
+              className="mt-3 font-display text-3xl tracking-tight text-ink sm:mt-4 sm:text-5xl md:text-6xl lg:text-[4.25rem]"
               delay={0.08}
             />
             <motion.p
@@ -67,12 +68,12 @@ export default function Categories() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2, ease: easeLuxury }}
-              className="mt-5 max-w-md text-[15px] leading-relaxed text-ink-muted md:text-base"
+              className="mt-4 max-w-md text-sm leading-relaxed text-ink-muted sm:mt-5 sm:text-[15px] md:text-base"
             >
               Rings, earrings, bangles, temple forms, and more — pick a
               category, then browse the pieces beneath it.
             </motion.p>
-            <GoldLine className="mt-8 w-20" delay={0.3} />
+            <GoldLine className="mt-6 w-16 sm:mt-8 sm:w-20" delay={0.3} />
           </div>
 
           <motion.p
@@ -89,9 +90,9 @@ export default function Categories() {
           </motion.p>
         </div>
 
-        {/* Mobile category rail */}
-        <div className="-mx-5 mb-8 lg:hidden">
-          <div className="flex gap-3 overflow-x-auto px-5 pb-1 scrollbar-none">
+        {/* Mobile category chips — scroll, no overflow */}
+        <div className="mb-6 lg:hidden">
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 scrollbar-none sm:-mx-5 sm:px-5">
             {categories.map((cat, i) => {
               const on = cat.id === activeId;
               return (
@@ -99,44 +100,37 @@ export default function Categories() {
                   key={cat.id}
                   type="button"
                   onClick={() => selectCategory(cat.id)}
-                  className={`relative shrink-0 overflow-hidden transition-all duration-500 ${
-                    on ? "w-[7.5rem]" : "w-[4.75rem]"
+                  className={`shrink-0 border px-3.5 py-2.5 text-left transition-colors duration-300 ${
+                    on
+                      ? "border-ink bg-ink text-porcelain"
+                      : "border-line bg-foam text-ink-muted"
                   }`}
                 >
-                  <div className="relative aspect-[3/4] overflow-hidden bg-stone">
-                    <img
-                      src={cat.image}
-                      alt=""
-                      className={`h-full w-full object-cover transition-all duration-700 ${
-                        on ? "scale-100 opacity-100" : "scale-110 opacity-70"
-                      }`}
-                    />
-                    <div
-                      className={`absolute inset-0 transition-colors duration-500 ${
-                        on ? "bg-ink/25" : "bg-ink/50"
-                      }`}
-                    />
-                    {on && (
-                      <motion.span
-                        layoutId="cat-mobile-line"
-                        className="absolute inset-x-2 bottom-2 h-px bg-champagne"
-                      />
-                    )}
-                  </div>
-                  <p
-                    className={`mt-2 text-[10px] tracking-[0.16em] uppercase ${
-                      on ? "text-ink" : "text-ink-muted"
+                  <span
+                    className={`block text-[9px] tracking-[0.18em] uppercase ${
+                      on ? "text-champagne-light" : "text-champagne-deep/70"
                     }`}
                   >
-                    {String(i + 1).padStart(2, "0")} {cat.name}
-                  </p>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="mt-0.5 block max-w-[9.5rem] truncate text-[11px] font-medium tracking-[0.08em] uppercase">
+                    {cat.name}
+                  </span>
                 </button>
               );
             })}
           </div>
+          <p className="mt-3 text-center font-display text-sm text-ink-muted/70">
+            {String(activeIndex + 1).padStart(2, "0")}
+            <span className="text-ink-muted/40">
+              {" "}
+              / {String(categories.length).padStart(2, "0")}
+            </span>
+          </p>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[16rem_minmax(0,1fr)] xl:gap-16">
+        <div className="grid min-w-0 gap-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-16">
+          {/* Desktop nav */}
           <nav className="hidden lg:block" aria-label="Jewellery categories">
             <ul className="sticky top-28 max-h-[calc(100svh-8rem)] space-y-0 overflow-y-auto border-l border-line scrollbar-none">
               {categories.map((cat, i) => {
@@ -169,7 +163,7 @@ export default function Categories() {
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <span
-                        className={`text-[12px] font-medium tracking-[0.12em] uppercase transition-colors duration-400 ${
+                        className={`min-w-0 text-[12px] font-medium tracking-[0.1em] uppercase transition-colors duration-400 ${
                           on
                             ? "text-ink"
                             : "text-ink-muted group-hover:text-ink"
@@ -187,62 +181,43 @@ export default function Categories() {
           <AnimatePresence mode="wait">
             <motion.div
               key={active.id}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.55, ease: easeLuxury }}
-              className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr] xl:gap-10"
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.45, ease: easeLuxury }}
+              className="grid min-w-0 gap-7 md:gap-8 xl:grid-cols-[1.05fr_0.95fr] xl:gap-10"
             >
-              <div className="relative overflow-hidden bg-ink">
-                <div className="relative aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] xl:min-h-[640px] xl:aspect-auto">
+              {/* Hero image */}
+              <div className="relative min-w-0 overflow-hidden bg-ink">
+                <div className="relative aspect-[4/5] w-full sm:aspect-[5/4] lg:aspect-[4/5] xl:min-h-[560px] xl:aspect-auto">
                   <AnimatePresence mode="sync" initial={false}>
                     <motion.img
                       key={active.image}
                       src={active.image}
                       alt={active.name}
                       className="absolute inset-0 h-full w-full object-cover"
-                      initial={{ scale: 1.12, opacity: 0 }}
+                      initial={{ scale: 1.08, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 1.04, opacity: 0 }}
-                      transition={{ duration: 1.1, ease: easeLuxury }}
+                      exit={{ scale: 1.02, opacity: 0 }}
+                      transition={{ duration: 0.9, ease: easeLuxury }}
                     />
                   </AnimatePresence>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-ink/30 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent" />
 
-                  <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 md:p-10">
-                    <motion.p
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.15, duration: 0.6 }}
-                      className="text-[10px] tracking-[0.3em] text-champagne-light uppercase sm:text-[11px]"
-                    >
+                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8 md:p-10">
+                    <p className="text-[9px] tracking-[0.28em] text-champagne-light uppercase sm:text-[10px]">
                       {active.count} curated pieces
-                    </motion.p>
-                    <motion.h3
-                      initial={{ opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        delay: 0.22,
-                        duration: 0.7,
-                        ease: easeOutExpo,
-                      }}
-                      className="mt-3 font-display text-4xl text-porcelain sm:text-5xl md:text-6xl lg:text-7xl"
-                    >
+                    </p>
+                    <h3 className="mt-2 font-display text-[1.75rem] leading-[1.1] text-porcelain text-balance sm:mt-3 sm:text-5xl md:text-6xl lg:text-7xl">
                       {active.name}
-                    </motion.h3>
-                    <motion.p
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3, duration: 0.65 }}
-                      className="mt-3 max-w-sm text-sm leading-relaxed text-stone/90"
-                    >
+                    </h3>
+                    <p className="mt-2 max-w-sm text-[13px] leading-relaxed text-stone/90 sm:mt-3 sm:text-sm">
                       {active.description}
-                    </motion.p>
+                    </p>
                   </div>
 
-                  <div className="absolute top-5 right-5 hidden items-center gap-2 sm:flex md:top-8 md:right-8">
+                  <div className="absolute top-4 right-4 hidden items-center gap-2 sm:flex md:top-8 md:right-8">
                     <span className="h-px w-8 bg-champagne/70" />
                     <span className="text-[10px] tracking-[0.28em] text-porcelain/70 uppercase">
                       {brand.tagline}
@@ -251,11 +226,12 @@ export default function Categories() {
                 </div>
               </div>
 
-              <div className="flex flex-col xl:min-h-[640px]">
-                <div>
-                  <div className="mb-5 flex items-baseline justify-between gap-4">
+              {/* Types + pieces */}
+              <div className="flex min-w-0 flex-col">
+                <div className="min-w-0">
+                  <div className="mb-4 flex items-baseline justify-between gap-3 sm:mb-5">
                     <p className="eyebrow">Sub products</p>
-                    <span className="text-[11px] tracking-[0.16em] text-ink-muted uppercase">
+                    <span className="shrink-0 text-[10px] tracking-[0.14em] text-ink-muted uppercase sm:text-[11px]">
                       {active.types.length} styles
                     </span>
                   </div>
@@ -266,37 +242,35 @@ export default function Categories() {
                       return (
                         <motion.li
                           key={type}
-                          initial={{ opacity: 0, x: 18 }}
+                          initial={{ opacity: 0, x: 12 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{
-                            duration: 0.45,
-                            delay: 0.06 + i * 0.04,
+                            duration: 0.4,
+                            delay: 0.04 + i * 0.03,
                             ease: easeOutExpo,
                           }}
                           className="border-b border-line"
                         >
-                          <div className="group flex w-full items-center gap-2 sm:gap-3">
+                          <div className="flex w-full min-w-0 items-center">
                             <button
                               type="button"
-                              onClick={() =>
-                                setActiveType(on ? null : type)
-                              }
-                              className={`flex min-w-0 flex-1 items-center gap-4 py-3.5 text-left transition-colors duration-400 sm:gap-5 sm:py-4 ${
-                                on ? "bg-stone/50" : "hover:bg-stone/40"
+                              onClick={() => setActiveType(on ? null : type)}
+                              className={`flex min-w-0 flex-1 items-center gap-3 py-3.5 pr-2 pl-1 text-left transition-colors duration-300 sm:gap-4 sm:py-4 sm:pl-2 ${
+                                on ? "bg-stone/50" : "active:bg-stone/30"
                               }`}
                             >
-                              <span className="w-6 shrink-0 pl-1 font-display text-sm text-champagne-deep/80 sm:pl-2">
+                              <span className="w-5 shrink-0 font-display text-sm text-champagne-deep/80 sm:w-6">
                                 {String(i + 1).padStart(2, "0")}
                               </span>
                               <span
-                                className={`flex-1 truncate text-[14px] sm:text-[15px] ${
-                                  on ? "text-ink" : "text-ink group-hover:text-ink-soft"
+                                className={`min-w-0 flex-1 truncate text-[13px] sm:text-[15px] ${
+                                  on ? "text-ink" : "text-ink"
                                 }`}
                               >
                                 {type}
                               </span>
                               {on && (
-                                <span className="hidden text-[9px] tracking-[0.18em] text-champagne-deep uppercase sm:inline">
+                                <span className="hidden shrink-0 text-[9px] tracking-[0.16em] text-champagne-deep uppercase sm:inline">
                                   Showing
                                 </span>
                               )}
@@ -305,7 +279,7 @@ export default function Categories() {
                               href={enquireType(type)}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="mr-2 flex h-9 w-9 shrink-0 items-center justify-center text-ink-muted/60 transition-colors hover:text-champagne-deep sm:mr-3"
+                              className="mr-1 flex h-10 w-10 shrink-0 items-center justify-center text-ink-muted/60 transition-colors hover:text-champagne-deep sm:mr-2"
                               aria-label={`Enquire about ${type}`}
                             >
                               <ArrowUpRight size={16} strokeWidth={1.35} />
@@ -317,37 +291,37 @@ export default function Categories() {
                   </ul>
                 </div>
 
-                <div className="mt-10 flex-1">
-                  <div className="mb-5 flex items-end justify-between gap-3">
-                    <p className="eyebrow">
+                <div className="mt-8 min-w-0 sm:mt-10">
+                  <div className="mb-4 flex items-end justify-between gap-3 sm:mb-5">
+                    <p className="eyebrow min-w-0 truncate">
                       {activeType ? activeType : "Selected pieces"}
                     </p>
                     {activeType && (
                       <button
                         type="button"
                         onClick={() => setActiveType(null)}
-                        className="link-underline text-[10px] tracking-[0.16em] text-ink-muted uppercase sm:text-[11px]"
+                        className="link-underline shrink-0 text-[10px] tracking-[0.16em] text-ink-muted uppercase"
                       >
                         Show all
                       </button>
                     )}
                   </div>
 
-                  <div className="-mx-5 flex gap-4 overflow-x-auto px-5 pb-2 scrollbar-none sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0">
+                  <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1 scrollbar-none sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0">
                     {pieces.slice(0, 3).map((piece, i) => (
                       <motion.a
                         key={piece.id}
                         href={enquire(piece.name)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        initial={{ opacity: 0, y: 18 }}
+                        initial={{ opacity: 0, y: 14 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{
-                          delay: 0.15 + i * 0.08,
-                          duration: 0.6,
+                          delay: 0.1 + i * 0.06,
+                          duration: 0.5,
                           ease: easeLuxury,
                         }}
-                        className="group w-[42vw] max-w-[11rem] shrink-0 sm:w-auto sm:max-w-none"
+                        className="group w-[38vw] max-w-[10.5rem] shrink-0 sm:w-auto sm:max-w-none"
                       >
                         <div className="relative aspect-[4/5] overflow-hidden bg-stone">
                           <img
@@ -356,12 +330,11 @@ export default function Categories() {
                             loading="lazy"
                             className="h-full w-full object-cover transition-transform duration-[1.1s] ease-out group-hover:scale-105"
                           />
-                          <div className="absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/15" />
                         </div>
-                        <p className="mt-3 font-display text-base leading-snug text-ink sm:text-lg">
+                        <p className="mt-2.5 font-display text-[0.95rem] leading-snug text-ink sm:mt-3 sm:text-lg">
                           {piece.name}
                         </p>
-                        <p className="mt-0.5 text-[10px] tracking-[0.14em] text-champagne-deep uppercase">
+                        <p className="mt-0.5 truncate text-[9px] tracking-[0.12em] text-champagne-deep uppercase sm:text-[10px]">
                           {piece.type}
                         </p>
                         <p className="mt-1 text-[11px] tracking-wide text-ink-muted">
@@ -372,12 +345,12 @@ export default function Categories() {
                   </div>
                 </div>
 
-                <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="mt-8 flex flex-col gap-2.5 sm:mt-10 sm:flex-row sm:items-center sm:gap-3">
                   <a
                     href={enquireCategory()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-luxe-fill w-full text-center sm:w-auto"
+                    className="btn-luxe-fill w-full truncate text-center sm:w-auto sm:max-w-[16rem]"
                   >
                     Enquire · {active.name}
                   </a>
