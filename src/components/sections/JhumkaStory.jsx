@@ -20,16 +20,20 @@ export default function JhumkaStory() {
   const story = jhumkaStory;
   const [burstKey, setBurstKey] = useState(0);
   const [denseDust, setDenseDust] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // One anchor for all screens — portrait frame is locked to girl.png aspect.
-  const earX = parsePercent(story.earAnchor.x);
-  const earY = parsePercent(story.earAnchor.y);
-  const studX = parsePercent(story.studOrigin?.x ?? "50%");
-  const studY = parsePercent(story.studOrigin?.y ?? "21.5%");
+  const earAnchor = isMobile
+    ? story.earAnchorMobile ?? story.earAnchor
+    : story.earAnchor;
+  const earX = parsePercent(earAnchor.x);
+  const earY = parsePercent(earAnchor.y);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
-    const sync = () => setDenseDust(mq.matches);
+    const sync = () => {
+      setDenseDust(mq.matches);
+      setIsMobile(!mq.matches);
+    };
     sync();
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
@@ -49,6 +53,7 @@ export default function JhumkaStory() {
     }
   });
 
+  // Intro copy: visible early, fades as travel begins
   const introOpacity = useTransform(
     scrollYProgress,
     [0, 0.12, 0.28],
@@ -60,6 +65,7 @@ export default function JhumkaStory() {
     reduce ? [0, 0] : [0, -24]
   );
 
+  // Portrait reveals mid-scroll
   const portraitOpacity = useTransform(
     scrollYProgress,
     [0.18, 0.38, 1],
@@ -68,41 +74,43 @@ export default function JhumkaStory() {
   const portraitScale = useTransform(
     scrollYProgress,
     [0.2, 0.55, 0.75, 1],
-    reduce ? [1, 1, 1, 1] : [1.06, 1.03, 1.01, 1]
+    reduce ? [1, 1, 1, 1] : [1.08, 1.04, 1.02, 0.96]
   );
 
+  // Background warmth
   const stageWarmth = useTransform(
     scrollYProgress,
     [0, 0.45, 1],
     reduce ? [0.2, 0.55, 0.55] : [0, 0.55, 0.7]
   );
 
-  // Path ends exactly on the piercing; studOrigin keeps the stud on that point.
+  // Jhumka path within portrait frame: center → curve → ear
   const jhumkaX = useTransform(
     scrollYProgress,
     [0, 0.2, 0.4, 0.55, 0.68],
     reduce
       ? [`${earX}%`, `${earX}%`, `${earX}%`, `${earX}%`, `${earX}%`]
-      : ["50%", "38%", "52%", `${earX - 2.5}%`, `${earX}%`]
+      : ["50%", "38%", "52%", `${earX - 3}%`, `${earX}%`]
   );
   const jhumkaY = useTransform(
     scrollYProgress,
     [0, 0.2, 0.4, 0.55, 0.68],
     reduce
       ? [`${earY}%`, `${earY}%`, `${earY}%`, `${earY}%`, `${earY}%`]
-      : ["42%", "28%", "32%", `${earY - 2.5}%`, `${earY}%`]
+      : ["42%", "28%", "32%", `${earY - 3}%`, `${earY}%`]
   );
   const jhumkaRotate = useTransform(
     scrollYProgress,
     [0, 0.25, 0.45, 0.68],
-    reduce ? [0, 0, 0, 0] : [-6, 12, -8, 1]
+    reduce ? [0, 0, 0, 0] : [-6, 12, -8, 2]
   );
   const jhumkaScale = useTransform(
     scrollYProgress,
     [0, 0.2, 0.5, 0.68, 1],
-    reduce ? [0.3, 0.3, 0.3, 0.3, 0.26] : [0.92, 0.82, 0.46, 0.28, 0.26]
+    reduce ? [0.28, 0.28, 0.28, 0.28, 0.24] : [0.95, 0.85, 0.48, 0.26, 0.22]
   );
 
+  // Trail sparks follow slightly behind
   const trailOpacity = useTransform(
     scrollYProgress,
     [0.22, 0.35, 0.55, 0.65],
@@ -117,12 +125,14 @@ export default function JhumkaStory() {
     return `${n + 5}%`;
   });
 
+  // Settle sparkle + shine
   const settleOpacity = useTransform(
     scrollYProgress,
     [0.64, 0.7, 0.82],
     reduce ? [0, 0.6, 0] : [0, 1, 0]
   );
 
+  // Finale branding
   const finaleOpacity = useTransform(
     scrollYProgress,
     [0.72, 0.82, 1],
@@ -152,6 +162,7 @@ export default function JhumkaStory() {
       aria-label="Jhumka scroll story"
     >
       <div className="sticky top-0 h-svh overflow-hidden bg-porcelain">
+        {/* Soft luxury backdrop */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,#fbf9f6_0%,#f6f2ec_45%,#e6dfd4_100%)]" />
         <motion.div
           className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(201,169,110,0.28),transparent_55%)]"
@@ -161,10 +172,10 @@ export default function JhumkaStory() {
 
         <GoldDust dense={denseDust} />
 
-        {/* Fixed 2:3 frame (= girl.png) so ear % stays on the piercing on every phone */}
-        <div className="absolute inset-0 z-[2] flex items-center justify-center px-4 pt-14 pb-28 sm:pb-24 md:pt-16 md:pb-20">
+        {/* Shared portrait frame — locked 2:3 to match girl.png so ear % is stable */}
+        <div className="absolute inset-0 z-[2] flex items-center justify-center">
           <motion.div
-            className="relative aspect-[2/3] h-auto max-h-full w-full max-w-[min(92vw,420px)] sm:max-w-[min(70vw,520px)] md:max-w-[min(52vw,560px)]"
+            className="relative aspect-[2/3] w-[min(92vw,420px,calc(78svh*2/3))] sm:w-[min(70vw,520px,calc(82svh*2/3))] md:w-[min(52vw,560px,calc(86svh*2/3))]"
             style={{ scale: portraitScale }}
           >
             <motion.div
@@ -177,9 +188,10 @@ export default function JhumkaStory() {
                 className="h-full w-full object-cover object-center"
                 draggable={false}
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-porcelain/45 via-transparent to-porcelain/15" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-porcelain/50 via-transparent to-porcelain/20" />
             </motion.div>
 
+            {/* Sparkle trail (portrait-relative) */}
             <motion.div
               className="pointer-events-none absolute z-[3] -translate-x-1/2 -translate-y-1/2"
               style={{ left: trailX, top: trailY, opacity: trailOpacity }}
@@ -190,24 +202,35 @@ export default function JhumkaStory() {
               <span className="absolute -left-2 top-4 h-1 w-1 rounded-full bg-champagne-deep/50" />
             </motion.div>
 
-            {/* Stud origin pinned to earAnchor — works at every scale */}
+            {/* Floating jhumka → settles on ear (origin at stud / top) */}
             <motion.div
-              className="pointer-events-none absolute z-[4] will-change-transform drop-shadow-[0_12px_28px_rgba(168,135,76,0.4)]"
+              className="pointer-events-none absolute z-[4] w-[42%] will-change-transform drop-shadow-[0_16px_36px_rgba(168,135,76,0.35)]"
               style={{
                 left: jhumkaX,
                 top: jhumkaY,
-                x: `-${studX}%`,
-                y: `-${studY}%`,
+                x: "-50%",
                 rotate: jhumkaRotate,
                 scale: jhumkaScale,
-                transformOrigin: `${studX}% ${studY}%`,
+                transformOrigin: "50% 29.5%",
               }}
             >
               <div className="relative">
+                {!reduce && (
+                  <motion.div
+                    className="absolute inset-[-4%] rounded-full bg-champagne/5 opacity-60"
+                    animate={{ y: [0, -6, 0], rotate: [0, 1.5, 0] }}
+                    transition={{
+                      duration: 4.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    aria-hidden
+                  />
+                )}
                 <img
                   src={story.jhumka}
                   alt={story.jhumkaAlt}
-                  className="relative h-[min(52vw,280px)] w-auto max-w-[min(46vw,240px)] object-contain mix-blend-lighten drop-shadow-[0_14px_32px_rgba(20,17,15,0.3)] sm:h-[300px] sm:max-w-[260px] md:h-[340px] md:max-w-[300px]"
+                  className="relative h-auto w-full object-contain mix-blend-lighten drop-shadow-[0_18px_40px_rgba(20,17,15,0.35)]"
                   draggable={false}
                 />
                 <motion.div
@@ -215,11 +238,12 @@ export default function JhumkaStory() {
                   style={{ opacity: settleOpacity }}
                   aria-hidden
                 >
-                  <span className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-champagne-light/35 to-transparent animate-gold-shine" />
+                  <span className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-champagne-light/40 to-transparent animate-gold-shine" />
                 </motion.div>
               </div>
             </motion.div>
 
+            {/* Settle sparkle at ear */}
             <motion.div
               className="pointer-events-none absolute z-[5] -translate-x-1/2 -translate-y-1/2"
               style={{
@@ -232,14 +256,18 @@ export default function JhumkaStory() {
               {burstKey > 0 && (
                 <span
                   key={burstKey}
-                  className="absolute h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-champagne/35 animate-sparkle-burst"
+                  className="absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-champagne/40 animate-sparkle-burst"
                 />
               )}
-              <span className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-champagne-light shadow-[0_0_10px_rgba(221,196,154,1)]" />
+              <span className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-champagne-light shadow-[0_0_12px_rgba(221,196,154,1)]" />
+              <span className="absolute left-4 top-[-10px] h-1 w-1 rounded-full bg-champagne" />
+              <span className="absolute left-[-14px] top-3 h-1.5 w-1.5 rounded-full bg-champagne-light/90" />
+              <span className="absolute left-2 top-5 h-1 w-1 rounded-full bg-champagne-deep/80" />
             </motion.div>
           </motion.div>
         </div>
 
+        {/* Settle line */}
         <motion.p
           className="pointer-events-none absolute inset-x-0 bottom-[22%] z-[6] text-center font-display text-xl text-ink/80 md:text-2xl"
           style={{ opacity: settleLineOpacity }}
@@ -247,6 +275,7 @@ export default function JhumkaStory() {
           {story.settleLine}
         </motion.p>
 
+        {/* Intro copy */}
         <motion.div
           className="absolute inset-x-0 bottom-0 z-[6] flex flex-col items-center px-5 pb-16 text-center md:pb-20"
           style={{ opacity: introOpacity, y: introY }}
@@ -263,6 +292,7 @@ export default function JhumkaStory() {
           </p>
         </motion.div>
 
+        {/* Finale branding + CTAs */}
         <motion.div
           className="absolute inset-x-0 bottom-0 z-[7] flex flex-col items-center px-5 pb-14 text-center md:pb-16"
           style={{ opacity: finaleOpacity, y: finaleY }}
@@ -270,7 +300,7 @@ export default function JhumkaStory() {
           <p className="text-[11px] font-medium tracking-[0.32em] text-champagne-deep uppercase">
             {story.brandLine}
           </p>
-          <div className="mt-6 flex w-full max-w-sm flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <a
               href={story.cta.href}
               onClick={(e) => {
