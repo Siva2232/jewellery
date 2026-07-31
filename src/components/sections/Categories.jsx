@@ -1,25 +1,39 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { brand, categories, featuredPieces } from "../../data/jewellery";
-import { formatPrice, scrollToId } from "../../utils/helpers";
+import { brand, categories, categoryPieces } from "../../data/jewellery";
+import { formatPrice } from "../../utils/helpers";
 import { easeLuxury, easeOutExpo } from "../../utils/motion";
 import RevealText from "../ui/RevealText";
 import GoldLine from "../ui/GoldLine";
 
 export default function Categories() {
   const [activeId, setActiveId] = useState(categories[0].id);
+  const [activeType, setActiveType] = useState(null);
   const activeIndex = categories.findIndex((c) => c.id === activeId);
   const active = categories[activeIndex] ?? categories[0];
 
+  const selectCategory = (id) => {
+    setActiveId(id);
+    setActiveType(null);
+  };
+
   const pieces = useMemo(() => {
-    const matched = featuredPieces.filter((p) => p.category === activeId);
-    return matched.length ? matched : featuredPieces.slice(0, 3);
-  }, [activeId]);
+    const matched = categoryPieces.filter((p) => p.category === activeId);
+    if (!matched.length) return [];
+    if (!activeType) return matched;
+    const typed = matched.filter((p) => p.type === activeType);
+    return typed.length ? typed : matched;
+  }, [activeId, activeType]);
 
   const enquire = (name) =>
     `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
       `Hi ${brand.name} — I'm interested in ${name} from your ${active.name} category.`
+    )}`;
+
+  const enquireType = (type) =>
+    `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
+      `Hi ${brand.name} — I'd like to see ${type} in your ${active.name} collection.`
     )}`;
 
   const enquireCategory = () =>
@@ -32,7 +46,6 @@ export default function Categories() {
       <div className="pointer-events-none absolute -top-32 right-0 h-[28rem] w-[28rem] rounded-full bg-champagne/10 blur-3xl" />
 
       <div className="section-shell section-pad relative">
-        {/* Header */}
         <div className="mb-12 flex flex-col gap-8 md:mb-16 lg:mb-20 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <motion.p
@@ -56,8 +69,8 @@ export default function Categories() {
               transition={{ duration: 0.8, delay: 0.2, ease: easeLuxury }}
               className="mt-5 max-w-md text-[15px] leading-relaxed text-ink-muted md:text-base"
             >
-              Necklaces, earrings, rings, and more — choose a silhouette, then
-              refine by type.
+              Rings, earrings, bangles, temple forms, and more — pick a
+              category, then browse the pieces beneath it.
             </motion.p>
             <GoldLine className="mt-8 w-20" delay={0.3} />
           </div>
@@ -85,7 +98,7 @@ export default function Categories() {
                 <button
                   key={cat.id}
                   type="button"
-                  onClick={() => setActiveId(cat.id)}
+                  onClick={() => selectCategory(cat.id)}
                   className={`relative shrink-0 overflow-hidden transition-all duration-500 ${
                     on ? "w-[7.5rem]" : "w-[4.75rem]"
                   }`}
@@ -123,36 +136,40 @@ export default function Categories() {
           </div>
         </div>
 
-        {/* Main stage */}
-        <div className="grid gap-10 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-16">
-          {/* Desktop vertical index */}
+        <div className="grid gap-10 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[16rem_minmax(0,1fr)] xl:gap-16">
           <nav className="hidden lg:block" aria-label="Jewellery categories">
-            <ul className="sticky top-32 space-y-0 border-l border-line">
+            <ul className="sticky top-28 max-h-[calc(100svh-8rem)] space-y-0 overflow-y-auto border-l border-line scrollbar-none">
               {categories.map((cat, i) => {
                 const on = cat.id === activeId;
                 return (
                   <li key={cat.id}>
                     <button
                       type="button"
-                      onClick={() => setActiveId(cat.id)}
-                      className="group relative flex w-full items-center gap-4 py-4 pl-6 text-left transition-colors"
+                      onClick={() => selectCategory(cat.id)}
+                      className="group relative flex w-full items-center gap-3 py-3.5 pl-5 text-left transition-colors"
                     >
                       {on && (
                         <motion.span
                           layoutId="cat-desk-line"
-                          className="absolute top-1/2 left-0 h-8 w-px -translate-y-1/2 bg-champagne"
-                          transition={{ type: "spring", stiffness: 420, damping: 36 }}
+                          className="absolute top-1/2 left-0 h-7 w-px -translate-y-1/2 bg-champagne"
+                          transition={{
+                            type: "spring",
+                            stiffness: 420,
+                            damping: 36,
+                          }}
                         />
                       )}
                       <span
                         className={`font-display text-sm transition-colors duration-400 ${
-                          on ? "text-champagne-deep" : "text-ink-muted/50 group-hover:text-ink-muted"
+                          on
+                            ? "text-champagne-deep"
+                            : "text-ink-muted/50 group-hover:text-ink-muted"
                         }`}
                       >
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <span
-                        className={`text-[13px] font-medium tracking-[0.14em] uppercase transition-colors duration-400 ${
+                        className={`text-[12px] font-medium tracking-[0.12em] uppercase transition-colors duration-400 ${
                           on
                             ? "text-ink"
                             : "text-ink-muted group-hover:text-ink"
@@ -167,7 +184,6 @@ export default function Categories() {
             </ul>
           </nav>
 
-          {/* Content panel */}
           <AnimatePresence mode="wait">
             <motion.div
               key={active.id}
@@ -175,9 +191,8 @@ export default function Categories() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.55, ease: easeLuxury }}
-              className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr] xl:gap-10"
+              className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr] xl:gap-10"
             >
-              {/* Cinematic image */}
               <div className="relative overflow-hidden bg-ink">
                 <div className="relative aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] xl:min-h-[640px] xl:aspect-auto">
                   <AnimatePresence mode="sync" initial={false}>
@@ -208,7 +223,11 @@ export default function Categories() {
                     <motion.h3
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.22, duration: 0.7, ease: easeOutExpo }}
+                      transition={{
+                        delay: 0.22,
+                        duration: 0.7,
+                        ease: easeOutExpo,
+                      }}
                       className="mt-3 font-display text-4xl text-porcelain sm:text-5xl md:text-6xl lg:text-7xl"
                     >
                       {active.name}
@@ -232,61 +251,86 @@ export default function Categories() {
                 </div>
               </div>
 
-              {/* Types + pieces */}
               <div className="flex flex-col xl:min-h-[640px]">
                 <div>
                   <div className="mb-5 flex items-baseline justify-between gap-4">
-                    <p className="eyebrow">Shop by type</p>
+                    <p className="eyebrow">Sub products</p>
                     <span className="text-[11px] tracking-[0.16em] text-ink-muted uppercase">
                       {active.types.length} styles
                     </span>
                   </div>
 
                   <ul className="border-t border-line">
-                    {active.types.map((type, i) => (
-                      <motion.li
-                        key={type}
-                        initial={{ opacity: 0, x: 18 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                          duration: 0.45,
-                          delay: 0.06 + i * 0.045,
-                          ease: easeOutExpo,
-                        }}
-                        className="border-b border-line"
-                      >
-                        <button
-                          type="button"
-                          onClick={() => scrollToId("#contact")}
-                          className="group flex w-full items-center gap-4 py-4 text-left transition-colors duration-400 hover:bg-stone/40 sm:gap-5 sm:py-[1.15rem]"
+                    {active.types.map((type, i) => {
+                      const on = activeType === type;
+                      return (
+                        <motion.li
+                          key={type}
+                          initial={{ opacity: 0, x: 18 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{
+                            duration: 0.45,
+                            delay: 0.06 + i * 0.04,
+                            ease: easeOutExpo,
+                          }}
+                          className="border-b border-line"
                         >
-                          <span className="w-6 shrink-0 font-display text-sm text-champagne-deep/80">
-                            {String(i + 1).padStart(2, "0")}
-                          </span>
-                          <span className="flex-1 text-[15px] text-ink transition-colors group-hover:text-ink-soft sm:text-base">
-                            {type}
-                          </span>
-                          <ArrowUpRight
-                            size={16}
-                            strokeWidth={1.35}
-                            className="shrink-0 text-ink-muted/60 transition-all duration-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-champagne-deep"
-                          />
-                        </button>
-                      </motion.li>
-                    ))}
+                          <div className="group flex w-full items-center gap-2 sm:gap-3">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setActiveType(on ? null : type)
+                              }
+                              className={`flex min-w-0 flex-1 items-center gap-4 py-3.5 text-left transition-colors duration-400 sm:gap-5 sm:py-4 ${
+                                on ? "bg-stone/50" : "hover:bg-stone/40"
+                              }`}
+                            >
+                              <span className="w-6 shrink-0 pl-1 font-display text-sm text-champagne-deep/80 sm:pl-2">
+                                {String(i + 1).padStart(2, "0")}
+                              </span>
+                              <span
+                                className={`flex-1 truncate text-[14px] sm:text-[15px] ${
+                                  on ? "text-ink" : "text-ink group-hover:text-ink-soft"
+                                }`}
+                              >
+                                {type}
+                              </span>
+                              {on && (
+                                <span className="hidden text-[9px] tracking-[0.18em] text-champagne-deep uppercase sm:inline">
+                                  Showing
+                                </span>
+                              )}
+                            </button>
+                            <a
+                              href={enquireType(type)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mr-2 flex h-9 w-9 shrink-0 items-center justify-center text-ink-muted/60 transition-colors hover:text-champagne-deep sm:mr-3"
+                              aria-label={`Enquire about ${type}`}
+                            >
+                              <ArrowUpRight size={16} strokeWidth={1.35} />
+                            </a>
+                          </div>
+                        </motion.li>
+                      );
+                    })}
                   </ul>
                 </div>
 
                 <div className="mt-10 flex-1">
                   <div className="mb-5 flex items-end justify-between gap-3">
-                    <p className="eyebrow">Selected pieces</p>
-                    <button
-                      type="button"
-                      onClick={() => scrollToId("#featured")}
-                      className="link-underline text-[10px] tracking-[0.16em] text-ink-muted uppercase sm:text-[11px]"
-                    >
-                      View all
-                    </button>
+                    <p className="eyebrow">
+                      {activeType ? activeType : "Selected pieces"}
+                    </p>
+                    {activeType && (
+                      <button
+                        type="button"
+                        onClick={() => setActiveType(null)}
+                        className="link-underline text-[10px] tracking-[0.16em] text-ink-muted uppercase sm:text-[11px]"
+                      >
+                        Show all
+                      </button>
+                    )}
                   </div>
 
                   <div className="-mx-5 flex gap-4 overflow-x-auto px-5 pb-2 scrollbar-none sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0">
@@ -299,7 +343,7 @@ export default function Categories() {
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{
-                          delay: 0.2 + i * 0.08,
+                          delay: 0.15 + i * 0.08,
                           duration: 0.6,
                           ease: easeLuxury,
                         }}
@@ -316,6 +360,9 @@ export default function Categories() {
                         </div>
                         <p className="mt-3 font-display text-base leading-snug text-ink sm:text-lg">
                           {piece.name}
+                        </p>
+                        <p className="mt-0.5 text-[10px] tracking-[0.14em] text-champagne-deep uppercase">
+                          {piece.type}
                         </p>
                         <p className="mt-1 text-[11px] tracking-wide text-ink-muted">
                           {formatPrice(piece.price)}
@@ -337,7 +384,7 @@ export default function Categories() {
                   <button
                     type="button"
                     onClick={() =>
-                      setActiveId(
+                      selectCategory(
                         categories[(activeIndex + 1) % categories.length].id
                       )
                     }

@@ -10,7 +10,10 @@ import {
 import { formatPrice, scrollToId } from "../../utils/helpers";
 import useBangleStory from "../../hooks/useBangleStory";
 
-const { patch: PATCH, wrist: WRIST } = bangleStoryGeometry.portrait;
+const WRIST = bangleStoryGeometry.portrait?.wrist ?? {
+  x: (400 / 1024) * 100,
+  y: (900 / 1536) * 100,
+};
 const { wall, story } = bangleStoryCopy;
 
 /** Gold dust that travels with the flying pair. Purely decorative. */
@@ -32,7 +35,6 @@ export default function Featured() {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
 
-  // One stable object so the story hook never re-runs on render.
   const refs = useRef({
     section: createRef(),
     stage: createRef(),
@@ -42,7 +44,7 @@ export default function Featured() {
     portraitBox: createRef(),
     portraitCam: createRef(),
     portraitBreath: createRef(),
-    patch: createRef(),
+    portraitWorn: createRef(),
     bloom: createRef(),
     burst: createRef(),
     sheen: createRef(),
@@ -62,64 +64,69 @@ export default function Featured() {
     stage: reduce ? "relative" : "relative h-svh overflow-hidden",
     wall: reduce
       ? "relative flex flex-col"
-      : "absolute inset-0 z-[3] flex flex-col px-5 pt-24 pb-6 md:px-8 lg:pt-28 lg:pb-10",
+      : "absolute inset-0 z-[3] flex flex-col px-4 pt-20 pb-4 md:px-6 lg:px-8 lg:pt-16 lg:pb-5 xl:px-10",
     grid: reduce
-      ? "mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"
-      : "mt-6 grid min-h-0 flex-1 grid-cols-2 grid-rows-5 gap-2.5 lg:mt-10 lg:grid-cols-5 lg:grid-rows-2 lg:gap-4",
+      ? "mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5 lg:gap-5"
+      : "mt-4 grid min-h-0 flex-1 grid-cols-4 grid-rows-5 gap-2 sm:gap-2.5 md:mt-5 md:grid-cols-5 md:grid-rows-4 md:gap-3 lg:mt-5 lg:gap-4 xl:gap-5",
     frame: reduce ? "aspect-[4/5] w-full" : "h-full w-full",
     story: reduce
-      ? "relative mt-24 grid items-center gap-12 lg:grid-cols-[0.95fr_1fr]"
+      ? "section-shell relative mt-24 grid items-center gap-12 lg:grid-cols-[0.95fr_1fr] lg:gap-16"
       : "pointer-events-none absolute inset-0 z-[4]",
     portraitBox: reduce
-      ? "relative order-1 mx-auto aspect-[1024/1536] w-full max-w-sm lg:order-2"
-      : "absolute left-1/2 top-[5%] aspect-[1024/1536] h-[44%] -translate-x-1/2 lg:left-auto lg:right-[5%] lg:top-[54%] lg:h-[82%] lg:translate-x-0 lg:-translate-y-1/2",
+      ? "relative order-1 mx-auto aspect-[1024/1536] w-full max-w-sm overflow-hidden ring-1 ring-champagne/25 lg:order-2 lg:max-w-md"
+      : "absolute left-1/2 top-[5%] aspect-[1024/1536] h-[44%] -translate-x-1/2 overflow-hidden ring-1 ring-ink/[0.06] lg:left-auto lg:right-[4%] lg:top-[54%] lg:h-[84%] lg:translate-x-0 lg:-translate-y-1/2 lg:ring-champagne/20",
     copy: reduce
       ? "order-2 lg:order-1"
-      : "absolute inset-x-0 bottom-0 z-[2] px-6 pb-10 text-center lg:inset-x-auto lg:bottom-auto lg:left-[6%] lg:top-1/2 lg:max-w-md lg:-translate-y-1/2 lg:px-0 lg:pb-0 lg:text-left",
+      : "absolute inset-x-0 bottom-0 z-[2] px-6 pb-10 text-center lg:inset-x-auto lg:bottom-auto lg:left-[5%] lg:top-1/2 lg:max-w-[26rem] lg:-translate-y-1/2 lg:px-0 lg:pb-0 lg:text-left xl:left-[7%] xl:max-w-md",
   };
 
   return (
     <section
       id="featured"
       ref={refs.section}
-      className={`relative bg-porcelain ${reduce ? "section-pad" : ""}`}
+      className={`relative overflow-hidden bg-porcelain ${reduce ? "section-pad" : ""}`}
     >
       <div ref={refs.stage} className={cls.stage}>
-        {/* Backdrop */}
+        {/* Atmosphere */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,#fbf9f6_0%,#f6f2ec_48%,#e6dfd4_100%)]"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_28%,#fbf9f6_0%,#f6f2ec_42%,#e8e0d4_100%)]"
         />
-        <div ref={refs.decor} aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-40 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-champagne/12 blur-3xl" />
-          <div className="absolute right-0 bottom-0 h-80 w-80 translate-x-1/4 translate-y-1/4 rounded-full bg-champagne/10 blur-3xl" />
+        <div
+          ref={refs.decor}
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+        >
+          <div className="absolute -top-40 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-champagne/14 blur-3xl" />
+          <div className="absolute right-0 bottom-0 h-96 w-96 translate-x-1/4 translate-y-1/4 rounded-full bg-champagne/10 blur-3xl" />
+          <div className="absolute top-1/3 left-[8%] hidden h-px w-24 bg-gradient-to-r from-transparent via-champagne/40 to-transparent lg:block" />
         </div>
-        <div className="grain !opacity-[0.03]" />
+        <div className="grain !opacity-[0.04]" />
 
-        {/* ── The collection wall ─────────────────────────────────────────── */}
+        {/* ── Collection wall ─────────────────────────────────────────────── */}
         <div className={cls.wall}>
           <div
             data-wall-chrome
-            className="section-shell flex shrink-0 flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+            className="mx-auto flex w-full max-w-[100rem] shrink-0 flex-col gap-3 lg:flex-row lg:items-end lg:justify-between lg:gap-10"
           >
-            <div>
+            <div className="max-w-xl">
               <div className="flex items-center gap-4">
                 <p className="eyebrow">{wall.eyebrow}</p>
-                <span className="h-px w-10 bg-champagne/60" />
-                <span className="font-display text-sm tabular-nums text-champagne-deep">
+                <span className="h-px w-12 bg-gradient-to-r from-champagne/70 to-transparent" />
+                <span className="font-display text-sm tabular-nums tracking-wide text-champagne-deep">
                   {String(featuredPieces.length).padStart(2, "0")}
                 </span>
               </div>
-              <h2 className="mt-3 font-display text-3xl tracking-tight text-ink md:text-4xl lg:text-[3.1rem]">
+              <h2 className="mt-2.5 font-display text-3xl tracking-tight text-ink text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.08] xl:text-[3.1rem]">
                 {wall.heading}
               </h2>
             </div>
-            <p className="max-w-xs text-xs leading-relaxed text-ink-muted md:text-sm lg:text-right">
+            <p className="max-w-xs text-[13px] leading-relaxed text-ink-muted md:text-sm lg:max-w-[16rem] lg:text-right lg:leading-relaxed">
               {wall.description}
             </p>
           </div>
 
-          <div className={`section-shell ${cls.grid}`}>
+          <div className={`mx-auto w-full max-w-[100rem] ${cls.grid}`}>
             {featuredPieces.map((piece, i) => {
               const isStory = Boolean(piece.isStoryPiece);
 
@@ -133,7 +140,7 @@ export default function Featured() {
                   {isStory && (
                     <span
                       aria-hidden
-                      className="animate-piece-glow pointer-events-none absolute -inset-4 -z-10 rounded-full bg-champagne/40 blur-2xl"
+                      className="animate-piece-glow pointer-events-none absolute -inset-5 -z-10 rounded-full bg-champagne/35 blur-2xl"
                     />
                   )}
 
@@ -141,16 +148,14 @@ export default function Featured() {
                     href={enquire(piece.name)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative block h-full overflow-hidden transition-[transform,box-shadow] duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-26px_rgba(20,17,15,0.5)]"
+                    className="relative block h-full overflow-hidden bg-stone transition-[transform,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-[0_28px_56px_-24px_rgba(20,17,15,0.45)]"
                   >
                     <div
                       id={isStory ? STORY_ANCHOR : undefined}
                       data-story-frame={isStory || undefined}
-                      className={`relative overflow-hidden bg-stone ${cls.frame}`}
+                      className={`relative overflow-hidden ${cls.frame}`}
                     >
-                      {/* Hover zoom lives on a wrapper so the story's own
-                          transforms on the image never fight with it. */}
-                      <div className="absolute inset-0 transition-transform duration-[1.3s] ease-out group-hover:scale-[1.06]">
+                      <div className="absolute inset-0 transition-transform duration-[1.25s] ease-out group-hover:scale-[1.05]">
                         <img
                           data-story-image={isStory || undefined}
                           src={piece.image}
@@ -163,37 +168,52 @@ export default function Featured() {
 
                       <div
                         data-card-chrome={isStory || undefined}
-                        className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-ink/20"
+                        className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-ink/10 transition-opacity duration-500 group-hover:via-ink/25"
+                      />
+
+                      {/* Thin champagne edge on hover */}
+                      <div
+                        data-card-chrome={isStory || undefined}
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0 opacity-0 ring-1 ring-inset ring-champagne/35 transition-opacity duration-500 group-hover:opacity-100"
                       />
 
                       <div
                         data-card-chrome={isStory || undefined}
-                        className="absolute inset-x-0 top-0 flex items-start justify-between p-3 lg:p-4"
+                        className="absolute inset-x-0 top-0 flex items-start justify-between p-2.5 lg:p-3.5 xl:p-4"
                       >
-                        <span className="font-display text-xs text-porcelain/75 lg:text-sm">
+                        <span className="font-display text-xs text-porcelain/70 lg:text-sm xl:text-base">
                           {String(i + 1).padStart(2, "0")}
                         </span>
-                        <span className="text-[8px] tracking-[0.2em] text-porcelain/60 uppercase opacity-0 transition-opacity duration-500 group-hover:opacity-100 lg:text-[9px]">
+                        <span className="text-[8px] tracking-[0.2em] text-champagne-light/80 uppercase opacity-0 transition-opacity duration-500 group-hover:opacity-100 lg:text-[9px]">
                           {piece.collection}
                         </span>
                       </div>
 
                       <div
                         data-card-chrome={isStory || undefined}
-                        className="absolute inset-x-0 bottom-0 p-3 lg:p-4"
+                        className="absolute inset-x-0 bottom-0 p-2.5 transition-transform duration-500 group-hover:-translate-y-0.5 lg:p-3.5 xl:p-4"
                       >
-                        <h3 className="font-display text-sm leading-tight text-porcelain lg:text-lg">
+                        {isStory && (
+                          <span className="mb-1.5 inline-block text-[8px] tracking-[0.22em] text-champagne-light uppercase lg:text-[9px]">
+                            Signature story
+                          </span>
+                        )}
+                        <h3 className="font-display text-[0.95rem] leading-tight text-porcelain sm:text-base lg:text-lg xl:text-xl">
                           {piece.name}
                         </h3>
-                        <div className="mt-1 flex items-center justify-between gap-2">
-                          <p className="text-[10px] tabular-nums text-champagne-light lg:text-xs">
+                        <div className="mt-1.5 flex items-center justify-between gap-2">
+                          <p className="text-[10px] tabular-nums tracking-wide text-champagne-light/90 lg:text-xs xl:text-sm">
                             {formatPrice(piece.price)}
                           </p>
-                          <ArrowUpRight
-                            size={13}
-                            strokeWidth={1.4}
-                            className="translate-y-1 text-porcelain/70 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
-                          />
+                          <span className="flex items-center gap-1 text-[9px] tracking-[0.16em] text-porcelain/55 uppercase opacity-0 transition-all duration-500 group-hover:opacity-100">
+                            Enquire
+                            <ArrowUpRight
+                              size={12}
+                              strokeWidth={1.4}
+                              className="translate-y-0.5"
+                            />
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -204,77 +224,93 @@ export default function Featured() {
           </div>
 
           {!reduce && (
-            <p
+            <div
               data-wall-chrome
-              className="section-shell mt-4 shrink-0 text-center text-[10px] tracking-[0.28em] text-champagne-deep uppercase lg:mt-6"
+              className="mx-auto mt-3 flex w-full max-w-[100rem] shrink-0 flex-col items-center gap-2 lg:mt-4"
             >
-              Keep scrolling
-            </p>
+              <span className="h-5 w-px bg-gradient-to-b from-champagne/50 to-transparent lg:h-6" />
+              <p className="text-[10px] tracking-[0.3em] text-champagne-deep uppercase">
+                Keep scrolling
+              </p>
+            </div>
           )}
         </div>
 
-        {/* ── The story ───────────────────────────────────────────────────── */}
+        {/* ── Story stage ─────────────────────────────────────────────────── */}
         <div ref={refs.story} className={cls.story}>
           <div ref={refs.portraitBox} className={cls.portraitBox}>
-            <div ref={refs.portraitCam} className="story-layer relative h-full w-full">
-              <div ref={refs.portraitBreath} className="story-layer relative h-full w-full">
-                <img
-                  src={bangleStoryAssets.portrait}
-                  alt="Model wearing the Meenaxi temple bangles"
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-
-                {/* Bare-wrist plate, pixel-aligned to the portrait. Fading this
-                    out is what makes the bangles appear on her wrist. */}
-                <img
-                  ref={refs.patch}
-                  src={bangleStoryAssets.wristBare}
-                  alt=""
-                  aria-hidden
-                  loading="lazy"
-                  decoding="async"
-                  className={`story-layer absolute ${reduce ? "opacity-0" : ""}`}
-                  style={{
-                    left: `${PATCH.left}%`,
-                    top: `${PATCH.top}%`,
-                    width: `${PATCH.width}%`,
-                    height: `${PATCH.height}%`,
-                  }}
-                />
-
-                <div
-                  ref={refs.bloom}
-                  aria-hidden
-                  className="story-layer pointer-events-none absolute rounded-full bg-champagne-light/50 opacity-0 mix-blend-screen blur-2xl"
-                  style={{ left: `${WRIST.x}%`, top: `${WRIST.y}%`, width: "26%", height: "18%" }}
-                />
-                <div
-                  ref={refs.burst}
-                  aria-hidden
-                  className="story-layer pointer-events-none absolute rounded-full border border-champagne-light/45 opacity-0"
-                  style={{ left: `${WRIST.x}%`, top: `${WRIST.y}%`, width: "14%", height: "10%" }}
-                />
-
-                {/* Reflection pass, clipped to the jewellery itself so it reads
-                    as metal catching the light, not a flash across her arm. */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute overflow-hidden rounded-full"
-                  style={{
-                    left: `${WRIST.x - 6.5}%`,
-                    top: `${WRIST.y - 4.25}%`,
-                    width: "13%",
-                    height: "8.5%",
-                  }}
-                >
-                  {/* Screen blend so it lifts the gold instead of painting the
-                      skin white. */}
-                  <div
-                    ref={refs.sheen}
-                    className="story-layer absolute -inset-y-1/2 left-0 w-1/3 bg-gradient-to-r from-transparent via-champagne-light/80 to-transparent opacity-0 mix-blend-screen"
+            <div
+              ref={refs.portraitCam}
+              className="story-layer relative h-full w-full"
+            >
+              <div
+                ref={refs.portraitBreath}
+                className="story-layer relative h-full w-full"
+              >
+                <div className="absolute inset-0 overflow-hidden">
+                  <img
+                    src={bangleStoryAssets.portrait}
+                    alt="Model with an empty wrist, ready for the bangles"
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
                   />
+
+                  <img
+                    ref={refs.portraitWorn}
+                    src={bangleStoryAssets.portraitWorn}
+                    alt="Model wearing the Meenaxi temple bangles"
+                    loading="lazy"
+                    decoding="async"
+                    className={`absolute inset-0 h-full w-full object-cover object-[center_28%] will-change-[opacity,transform] ${
+                      reduce ? "" : "opacity-0"
+                    }`}
+                  />
+
+                  {/* Soft vignette on portrait */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-ink/10"
+                  />
+
+                  <div
+                    ref={refs.bloom}
+                    aria-hidden
+                    className="story-layer pointer-events-none absolute rounded-full bg-champagne-light/50 opacity-0 mix-blend-screen blur-2xl"
+                    style={{
+                      left: `${WRIST.x}%`,
+                      top: `${WRIST.y}%`,
+                      width: "26%",
+                      height: "18%",
+                    }}
+                  />
+                  <div
+                    ref={refs.burst}
+                    aria-hidden
+                    className="story-layer pointer-events-none absolute rounded-full border border-champagne-light/45 opacity-0"
+                    style={{
+                      left: `${WRIST.x}%`,
+                      top: `${WRIST.y}%`,
+                      width: "14%",
+                      height: "10%",
+                    }}
+                  />
+
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute overflow-hidden rounded-full"
+                    style={{
+                      left: `${WRIST.x - 6.5}%`,
+                      top: `${WRIST.y - 4.25}%`,
+                      width: "13%",
+                      height: "8.5%",
+                    }}
+                  >
+                    <div
+                      ref={refs.sheen}
+                      className="story-layer absolute -inset-y-1/2 left-0 w-1/3 bg-gradient-to-r from-transparent via-champagne-light/80 to-transparent opacity-0 mix-blend-screen"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -283,48 +319,53 @@ export default function Featured() {
           {!reduce && (
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[54%] bg-gradient-to-t from-porcelain via-porcelain/92 to-transparent lg:hidden"
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[52%] bg-gradient-to-t from-porcelain via-porcelain/90 to-transparent lg:hidden"
             />
           )}
 
           <div ref={refs.copy} className={cls.copy}>
-            <p data-story-copy className="eyebrow">
-              {story.eyebrow}
-            </p>
+            <div data-story-copy className="flex items-center justify-center gap-3 lg:justify-start">
+              <p className="eyebrow">{story.eyebrow}</p>
+              <span className="hidden h-px w-8 bg-champagne/50 lg:block" />
+            </div>
             <h2
               data-story-copy
-              className="mt-4 font-display text-3xl leading-[1.08] tracking-tight text-ink text-balance sm:text-4xl lg:text-[3.4rem]"
+              className="mt-4 font-display text-3xl leading-[1.08] tracking-tight text-ink text-balance sm:text-4xl lg:text-[3.35rem]"
             >
               {story.heading}
             </h2>
+            <div
+              data-story-copy
+              className="gold-hairline mx-auto mt-6 w-16 origin-center lg:mx-0 lg:origin-left"
+            />
             <p
               data-story-copy
-              className="mt-4 max-w-md text-sm leading-relaxed text-ink-muted lg:mt-6 lg:text-base"
+              className="mt-5 max-w-md text-sm leading-relaxed text-ink-muted lg:mt-6 lg:text-[15px]"
             >
               {story.paragraph}
             </p>
             <div
               data-story-copy
-              className="mt-7 flex flex-wrap items-center justify-center gap-3 lg:mt-10 lg:justify-start"
+              className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:mt-10 lg:justify-start"
             >
               <button
                 type="button"
                 onClick={() => scrollToId(story.primaryCta.href)}
-                className="btn-luxe-fill pointer-events-auto min-w-[11rem]"
+                className="btn-luxe-fill pointer-events-auto min-w-[11.5rem]"
               >
                 {story.primaryCta.label}
               </button>
               <button
                 type="button"
                 onClick={() => scrollToId(story.secondaryCta.href)}
-                className="btn-luxe-ghost pointer-events-auto min-w-[11rem]"
+                className="btn-luxe-ghost pointer-events-auto min-w-[11.5rem]"
               >
                 {story.secondaryCta.label}
               </button>
             </div>
             <p
               data-story-copy
-              className="mt-6 hidden text-[10px] tracking-[0.26em] text-champagne-deep uppercase sm:block lg:mt-8"
+              className="mt-7 hidden text-[10px] tracking-[0.28em] text-champagne-deep uppercase sm:block lg:mt-9"
             >
               {story.caption}
             </p>
@@ -332,9 +373,7 @@ export default function Featured() {
         </div>
       </div>
 
-      {/* ── The flying pair ─────────────────────────────────────────────────
-          Lives outside the clipped stage. Position and size are written once
-          from the card's measured rect; the flight is transform only. */}
+      {/* Flying pair — measured & driven by GSAP */}
       {!reduce && (
         <div
           ref={refs.clone}
@@ -343,13 +382,13 @@ export default function Featured() {
         >
           <div
             ref={refs.cloneGlow}
-            className="pointer-events-none absolute -inset-[20%] rounded-full bg-[radial-gradient(circle,rgba(221,196,154,0.5),rgba(201,169,110,0.16)_45%,transparent_70%)] opacity-0 blur-xl"
+            className="pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(circle,rgba(221,196,154,0.55),rgba(201,169,110,0.18)_45%,transparent_70%)] opacity-0 blur-xl"
           />
           <img
             src={bangleStoryAssets.cutout}
             alt=""
             decoding="async"
-            className="relative h-full w-full object-contain drop-shadow-[0_26px_48px_rgba(120,92,42,0.45)]"
+            className="relative h-full w-full object-contain drop-shadow-[0_28px_52px_rgba(120,92,42,0.5)]"
           />
           <div
             ref={refs.cloneDust}

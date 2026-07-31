@@ -28,6 +28,9 @@ export default function Footer() {
             <p className="mt-2 text-[11px] tracking-[0.2em] text-champagne-light/80 uppercase">
               {brand.descriptor}
             </p>
+            <p className="mt-3 text-[11px] tracking-[0.18em] text-champagne/70 uppercase">
+              {brand.motto}
+            </p>
             <GoldLine className="mt-8 w-16" delay={0.2} />
           </motion.div>
 
@@ -54,7 +57,7 @@ export default function Footer() {
           <motion.div variants={fadeUp} custom={0.18}>
             <p className="eyebrow !text-champagne-light">Studio</p>
             <ul className="mt-6 space-y-3.5 text-sm text-stone">
-              <li>{brand.location}</li>
+              <li className="max-w-[16rem] leading-relaxed">{brand.address}</li>
               <li>
                 <a
                   href={`mailto:${brand.email}`}
@@ -71,6 +74,16 @@ export default function Footer() {
                   {brand.phone}
                 </a>
               </li>
+              <li>
+                <a
+                  href={brand.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline hover:text-porcelain"
+                >
+                  @{brand.instagram}
+                </a>
+              </li>
               <li>{brand.hours}</li>
             </ul>
           </motion.div>
@@ -78,7 +91,7 @@ export default function Footer() {
 
         <div className="mt-20 flex flex-col gap-3 border-t border-white/10 pt-8 text-[11px] tracking-[0.14em] text-stone/60 uppercase sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {brand.fullName}</p>
-          <p>Crafted for occasions that matter</p>
+          <p>{brand.motto}</p>
         </div>
       </div>
     </footer>

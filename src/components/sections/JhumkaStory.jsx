@@ -18,14 +18,22 @@ export default function JhumkaStory() {
   const ref = useRef(null);
   const reduce = useReducedMotion();
   const story = jhumkaStory;
-  const earX = parsePercent(story.earAnchor.x);
-  const earY = parsePercent(story.earAnchor.y);
   const [burstKey, setBurstKey] = useState(0);
   const [denseDust, setDenseDust] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const earAnchor = isMobile
+    ? story.earAnchorMobile ?? story.earAnchor
+    : story.earAnchor;
+  const earX = parsePercent(earAnchor.x);
+  const earY = parsePercent(earAnchor.y);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
-    const sync = () => setDenseDust(mq.matches);
+    const sync = () => {
+      setDenseDust(mq.matches);
+      setIsMobile(!mq.matches);
+    };
     sync();
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);

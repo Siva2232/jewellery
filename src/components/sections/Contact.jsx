@@ -68,15 +68,44 @@ export default function Contact() {
             </a>
           </motion.div>
 
-          <motion.p
+          <motion.div
             variants={fadeUp}
             custom={0.35}
-            className="mt-12 text-sm tracking-wide text-ink-muted"
+            className="mx-auto mt-12 max-w-md space-y-2 text-sm leading-relaxed text-ink-muted"
           >
-            {brand.phone}
-            <span className="mx-3 text-champagne">·</span>
-            {brand.hours}
-          </motion.p>
+            <p>
+              <a
+                href={`tel:${brand.phone.replace(/\s/g, "")}`}
+                className="link-underline hover:text-ink"
+              >
+                {brand.phone}
+              </a>
+            </p>
+            <p>
+              <a
+                href={`mailto:${brand.email}`}
+                className="link-underline hover:text-ink"
+              >
+                {brand.email}
+              </a>
+            </p>
+            <p className="text-[13px]">{brand.address}</p>
+            <p>
+              <a
+                href={brand.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline hover:text-ink"
+              >
+                @{brand.instagram}
+              </a>
+              <span className="mx-3 text-champagne">·</span>
+              {brand.hours}
+            </p>
+            <p className="pt-2 text-[11px] tracking-[0.22em] text-champagne-deep uppercase">
+              {brand.motto}
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </section>

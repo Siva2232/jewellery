@@ -4,18 +4,22 @@ import banglesCardImg from "../assets/images/story/bangles-card.webp";
 
 export const brand = {
   name: "ORRA",
-  fullName: "ORRA Premium Jewellery",
+  fullName: "ORRA Premium Imitation Gold Jewellery",
   tagline: "Shine Beyond Gold",
+  motto: "Elegance That Lasts",
   descriptor: "Premium Imitation Gold Jewellery",
   about:
     "ORRA crafts pieces for the moments that linger — bridal mornings, festive evenings, and the quiet days in between. Every design balances heritage craft with a modern, wearable silhouette.",
   aboutSecondary:
-    "From our atelier to your occasion, we work in gold-tone finishes, temple motifs, and refined everyday forms — always with a restrained, editorial eye.",
-  whatsapp: "919591321696",
-  email: "hello@orra.jewellery",
-  phone: "+91 95913 21696",
+    "From our Cochin atelier to your occasion, we work in gold-tone finishes, temple motifs, and refined everyday forms — always with a restrained, editorial eye.",
+  whatsapp: "918943351809",
+  email: "enquiriesorra@gmail.com",
+  phone: "+91 89433 51809",
+  address: "PPDO Building, Chakkaraparambu, Pin 682032, Ernakulam, Cochin, Kerala",
+  location: "Ernakulam, Cochin, Kerala",
+  instagram: "orra_imitationsgold",
+  instagramUrl: "https://instagram.com/orra_imitationsgold",
   hours: "Mon – Sat, 10:00 AM – 7:00 PM",
-  location: "Bangalore, India",
   logo: "/orra-logo.png?v=2",
 };
 
@@ -33,31 +37,6 @@ export const navLinks = [
 
 export const categories = [
   {
-    id: "necklaces",
-    name: "Necklaces",
-    description: "Chokers, haaram, and layered forms",
-    count: 48,
-    image:
-      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1400&q=80",
-    types: [
-      "Short Necklaces",
-      "Long Necklaces / Haaram",
-      "Chokers",
-      "Layered Necklaces",
-      "Pendant Sets",
-      "Mangalsutra",
-    ],
-  },
-  {
-    id: "earrings",
-    name: "Earrings",
-    description: "Jhumkas, studs, and danglers",
-    count: 62,
-    image:
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1400&q=80",
-    types: ["Jhumkas", "Balis / Hoops", "Chandbalis", "Studs", "Danglers"],
-  },
-  {
     id: "rings",
     name: "Rings",
     description: "Statement, stackable, and bridal bands",
@@ -70,16 +49,120 @@ export const categories = [
       "Bridal Bands",
       "Temple Rings",
       "Adjustable Rings",
+      "Solitaire Style",
+    ],
+  },
+  {
+    id: "earrings",
+    name: "Earrings",
+    description: "Jhumkas, studs, and danglers",
+    count: 62,
+    image:
+      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1400&q=80",
+    types: [
+      "Jhumkas",
+      "Studs",
+      "Chandbalis",
+      "Hoops / Balis",
+      "Danglers",
+      "Ear Cuffs",
     ],
   },
   {
     id: "bangles",
     name: "Bangles",
-    description: "Kadas, pairs, and bracelets",
+    description: "Pairs, kadas, and bridal sets",
     count: 41,
     image:
       "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1400&q=80",
-    types: ["Kadas", "Single Bangle", "Pair Bangle", "Bracelet", "Changeable"],
+    types: [
+      "Pair Bangles",
+      "Kadas",
+      "Single Bangle",
+      "Kemp Bangles",
+      "Bridal Sets",
+      "Changeable",
+    ],
+  },
+  {
+    id: "necklaces",
+    name: "Necklaces",
+    description: "Chokers, haaram, and layered forms",
+    count: 48,
+    image:
+      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1400&q=80",
+    types: [
+      "Short Necklaces",
+      "Long Haaram",
+      "Chokers",
+      "Layered Necklaces",
+      "Pendant Sets",
+      "Bridal Sets",
+    ],
+  },
+  {
+    id: "kerala-traditional",
+    name: "Kerala Traditional",
+    description: "Kasumala, mullamottu, and heritage forms",
+    count: 29,
+    image:
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1400&q=80",
+    types: [
+      "Kasumala",
+      "Mullamottu Mala",
+      "Oddiyanam",
+      "Kerala Jhumkas",
+      "Temple Cascades",
+      "Traditional Sets",
+    ],
+  },
+  {
+    id: "temple-collections",
+    name: "Temple Collections",
+    description: "Goddess motifs and antique temple finish",
+    count: 44,
+    image:
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1400&q=80",
+    types: [
+      "Temple Necklaces",
+      "Temple Earrings",
+      "Temple Bangles",
+      "Goddess Motifs",
+      "Antique Finish",
+      "Bridal Temple Sets",
+    ],
+  },
+  {
+    id: "simple-chains",
+    name: "Simple Chains",
+    description: "Everyday links for quiet layering",
+    count: 32,
+    image:
+      "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1400&q=80",
+    types: [
+      "Cable Chains",
+      "Box Chains",
+      "Rope Chains",
+      "Pendant Chains",
+      "Everyday Links",
+      "Layering Chains",
+    ],
+  },
+  {
+    id: "anklets",
+    name: "Anklet",
+    description: "Payals and soft chain forms for the ankle",
+    count: 24,
+    image:
+      "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=1400&q=80",
+    types: [
+      "Payal / Anklets",
+      "Bridal Anklets",
+      "Bell Anklets",
+      "Chain Anklets",
+      "Toe Ring Sets",
+      "Dual Pair",
+    ],
   },
   {
     id: "bracelets",
@@ -88,26 +171,18 @@ export const categories = [
     count: 28,
     image:
       "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1400&q=80",
-    types: ["Chain Bracelets", "Cuffs", "Charm Bracelets", "Tennis Style"],
-  },
-  {
-    id: "accessories",
-    name: "Accessories",
-    description: "Tikkas, naths, and finishing pieces",
-    count: 33,
-    image:
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1400&q=80",
     types: [
-      "Maang Tikkas",
-      "Nath",
-      "Hair Brooch",
-      "Bajubands",
-      "Toe Rings",
-      "Payals",
+      "Chain Bracelets",
+      "Cuffs",
+      "Charm Bracelets",
+      "Tennis Style",
+      "Kada Bracelets",
+      "Delicate Links",
     ],
   },
 ];
 
+/** Curated wall for Featured (20 pieces + scroll story anchor). */
 export const featuredPieces = [
   {
     id: "aurora-choker",
@@ -173,13 +248,13 @@ export const featuredPieces = [
       "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=80",
   },
   {
-    id: "maang-tikka",
-    name: "Lumen Maang Tikka",
-    category: "accessories",
-    collection: "Bridal",
-    price: 2490,
+    id: "kasumala-gold",
+    name: "Kasumala Cascade",
+    category: "kerala-traditional",
+    collection: "Heritage",
+    price: 5990,
     image:
-      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1000&q=80",
   },
   {
     id: "silk-cuff",
@@ -190,8 +265,96 @@ export const featuredPieces = [
     image:
       "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=80",
   },
-  // Tenth piece. Styled identically to the rest — the scroll story lifts this
-  // one out of the wall, so it must not read as a special card.
+  {
+    id: "goddess-haaram",
+    name: "Goddess Temple Haaram",
+    category: "temple-collections",
+    collection: "Bridal",
+    price: 6890,
+    image:
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "chandbali-dusk",
+    name: "Dusk Chandbali",
+    category: "earrings",
+    collection: "Festive",
+    price: 2790,
+    image:
+      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "mullamottu-mala",
+    name: "Mullamottu Mala",
+    category: "kerala-traditional",
+    collection: "Bridal",
+    price: 4590,
+    image:
+      "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "antique-kada",
+    name: "Antique Finish Kada",
+    category: "bangles",
+    collection: "Heritage",
+    price: 4190,
+    image:
+      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "cable-everyday",
+    name: "Everyday Cable Chain",
+    category: "simple-chains",
+    collection: "Minimal",
+    price: 1290,
+    image:
+      "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "bridal-anklet",
+    name: "Bridal Chain Anklet",
+    category: "anklets",
+    collection: "Bridal",
+    price: 2290,
+    image:
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "temple-band",
+    name: "Meenakshi Temple Band",
+    category: "rings",
+    collection: "Heritage",
+    price: 1890,
+    image:
+      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "layered-lumen",
+    name: "Lumen Layered Set",
+    category: "necklaces",
+    collection: "Everyday",
+    price: 3490,
+    image:
+      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "tennis-glow",
+    name: "Tennis Glow Bracelet",
+    category: "bracelets",
+    collection: "Minimal",
+    price: 2590,
+    image:
+      "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "antique-temple-set",
+    name: "Antique Temple Set",
+    category: "temple-collections",
+    collection: "Bridal",
+    price: 7490,
+    image:
+      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=80",
+  },
   {
     id: "meenaxi-bangles",
     name: "Meenaxi Temple Bangles",
@@ -200,6 +363,279 @@ export const featuredPieces = [
     price: 5290,
     image: banglesCardImg,
     isStoryPiece: true,
+  },
+];
+
+/** Category browse products — shown under each category in Categories. */
+export const categoryPieces = [
+  {
+    id: "solenne-ring",
+    name: "Solenne Cocktail Ring",
+    category: "rings",
+    type: "Cocktail Rings",
+    collection: "Everyday",
+    price: 2190,
+    image:
+      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "lumen-band",
+    name: "Lumen Stack Band",
+    category: "rings",
+    type: "Stackable Rings",
+    collection: "Minimal",
+    price: 1490,
+    image:
+      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "temple-band",
+    name: "Meenakshi Temple Band",
+    category: "rings",
+    type: "Temple Rings",
+    collection: "Heritage",
+    price: 1890,
+    image:
+      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "temple-drop",
+    name: "Temple Drop Earrings",
+    category: "earrings",
+    type: "Danglers",
+    collection: "Heritage",
+    price: 3290,
+    image:
+      "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "solstice-studs",
+    name: "Solstice Studs",
+    category: "earrings",
+    type: "Studs",
+    collection: "Minimal",
+    price: 1890,
+    image:
+      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "chandbali-dusk",
+    name: "Dusk Chandbali",
+    category: "earrings",
+    type: "Chandbalis",
+    collection: "Festive",
+    price: 2790,
+    image:
+      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "kemp-bangle",
+    name: "Kemp Pair Bangle",
+    category: "bangles",
+    type: "Kemp Bangles",
+    collection: "Festive",
+    price: 3590,
+    image:
+      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "meenaxi-bangles",
+    name: "Meenaxi Temple Bangles",
+    category: "bangles",
+    type: "Bridal Sets",
+    collection: "Bridal",
+    price: 5290,
+    image: banglesCardImg,
+  },
+  {
+    id: "antique-kada",
+    name: "Antique Finish Kada",
+    category: "bangles",
+    type: "Kadas",
+    collection: "Heritage",
+    price: 4190,
+    image:
+      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "aurora-choker",
+    name: "Aurora Choker",
+    category: "necklaces",
+    type: "Chokers",
+    collection: "Bridal",
+    price: 4890,
+    image:
+      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "pearl-cascade",
+    name: "Pearl Cascade Necklace",
+    category: "necklaces",
+    type: "Short Necklaces",
+    collection: "Everyday",
+    price: 2790,
+    image:
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "layered-lumen",
+    name: "Lumen Layered Set",
+    category: "necklaces",
+    type: "Layered Necklaces",
+    collection: "Everyday",
+    price: 3490,
+    image:
+      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "kasumala-gold",
+    name: "Kasumala Cascade",
+    category: "kerala-traditional",
+    type: "Kasumala",
+    collection: "Heritage",
+    price: 5990,
+    image:
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "mullamottu-mala",
+    name: "Mullamottu Mala",
+    category: "kerala-traditional",
+    type: "Mullamottu Mala",
+    collection: "Bridal",
+    price: 4590,
+    image:
+      "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "kerala-jhumka",
+    name: "Kerala Motif Jhumka",
+    category: "kerala-traditional",
+    type: "Kerala Jhumkas",
+    collection: "Festive",
+    price: 2690,
+    image:
+      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "goddess-haaram",
+    name: "Goddess Temple Haaram",
+    category: "temple-collections",
+    type: "Temple Necklaces",
+    collection: "Bridal",
+    price: 6890,
+    image:
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "temple-jhumka-set",
+    name: "Temple Jhumka Set",
+    category: "temple-collections",
+    type: "Temple Earrings",
+    collection: "Heritage",
+    price: 3890,
+    image:
+      "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "antique-temple-set",
+    name: "Antique Temple Set",
+    category: "temple-collections",
+    type: "Bridal Temple Sets",
+    collection: "Bridal",
+    price: 7490,
+    image:
+      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "cable-everyday",
+    name: "Everyday Cable Chain",
+    category: "simple-chains",
+    type: "Cable Chains",
+    collection: "Minimal",
+    price: 1290,
+    image:
+      "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "box-chain-soft",
+    name: "Soft Box Chain",
+    category: "simple-chains",
+    type: "Box Chains",
+    collection: "Everyday",
+    price: 1490,
+    image:
+      "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "layer-trio",
+    name: "Layer Trio Chain",
+    category: "simple-chains",
+    type: "Layering Chains",
+    collection: "Everyday",
+    price: 1990,
+    image:
+      "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "silver-payal",
+    name: "Bell Payal Pair",
+    category: "anklets",
+    type: "Bell Anklets",
+    collection: "Festive",
+    price: 1690,
+    image:
+      "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "bridal-anklet",
+    name: "Bridal Chain Anklet",
+    category: "anklets",
+    type: "Bridal Anklets",
+    collection: "Bridal",
+    price: 2290,
+    image:
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "delicate-anklet",
+    name: "Delicate Link Anklet",
+    category: "anklets",
+    type: "Chain Anklets",
+    collection: "Everyday",
+    price: 1190,
+    image:
+      "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "silk-cuff",
+    name: "Silk Chain Bracelet",
+    category: "bracelets",
+    type: "Chain Bracelets",
+    collection: "Everyday",
+    price: 1990,
+    image:
+      "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "charm-cuff",
+    name: "Charm Cuff Bracelet",
+    category: "bracelets",
+    type: "Cuffs",
+    collection: "Festive",
+    price: 2390,
+    image:
+      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "tennis-glow",
+    name: "Tennis Glow Bracelet",
+    category: "bracelets",
+    type: "Tennis Style",
+    collection: "Minimal",
+    price: 2590,
+    image:
+      "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=80",
   },
 ];
 
@@ -301,7 +737,7 @@ export const atelier = {
   image:
     "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=1600&q=80",
   stats: [
-    { value: "Bangalore", label: "Studio city" },
+    { value: "Cochin", label: "Studio city" },
     { value: "Hand", label: "Finished detail" },
     { value: "Private", label: "Enquiry first" },
   ],
@@ -347,8 +783,10 @@ export const jhumkaStory = {
   jhumkaAlt: "Gold temple jhumka earring",
   portrait: girlImg,
   portraitAlt: "Woman in profile, ear ready for a jhumka",
-  // Tunable: % within the portrait frame where the lobe sits
-  earAnchor: { x: "70%", y: "45%" },
+  // Tunable: % within the portrait frame — stud sits on the lobe piercing
+  earAnchor: { x: "70.5%", y: "46%" },
+  // Mobile crop sits a touch lower / tighter on the ear
+  earAnchorMobile: { x: "75.5%", y: "48%" },
 };
 
 export const hero = {
