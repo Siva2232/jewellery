@@ -785,8 +785,8 @@ export const jhumkaStory = {
   portraitAlt: "Woman in profile, ear ready for a jhumka",
   // Tunable: % within the locked 2:3 portrait frame — stud center on piercing
   // (transformOrigin on jhumka is 50% 29.5% = red-stone / stud center in jumukka.png)
-  earAnchor: { x: "73%", y: "48.5%" },
-  earAnchorMobile: { x: "73%", y: "48.5%" },
+  earAnchor: { x: "73%", y: "50%" },
+  earAnchorMobile: { x: "73%", y: "50%" },
 };
 
 export const hero = {
