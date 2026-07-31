@@ -783,10 +783,11 @@ export const jhumkaStory = {
   jhumkaAlt: "Gold temple jhumka earring",
   portrait: girlImg,
   portraitAlt: "Woman in profile, ear ready for a jhumka",
-  // Tunable: % within the portrait frame — stud sits on the lobe piercing
-  earAnchor: { x: "70.5%", y: "46%" },
-  // Mobile crop sits a touch lower / tighter on the ear
-  earAnchorMobile: { x: "75.5%", y: "48%" },
+  // % within the fixed 2:3 portrait frame — stud sits on the lobe piercing.
+  // Same on all breakpoints once the frame aspect matches girl.png (408×612).
+  earAnchor: { x: "72.8%", y: "49%" },
+  // Stud center (red stone) inside jumukka.png canvas.
+  studOrigin: { x: "50%", y: "21.5%" },
 };
 
 export const hero = {
