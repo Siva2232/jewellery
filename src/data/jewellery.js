@@ -785,15 +785,11 @@ export const jhumkaStory = {
   portraitAlt: "Woman in profile, ear ready for a jhumka",
   // Tunable: % within the locked 2:3 portrait frame — stud center on piercing
   // (transformOrigin on jhumka is 50% 29.5% = red-stone / stud center in jumukka.png)
-  earAnchor: { x: "73%", y: "50%" },
-  earAnchorMobile: { x: "73%", y: "50%" },
+  earAnchor: { x: "70%", y: "39.2%" },
+  earAnchorMobile: { x: "70%", y: "39.2%" },
 };
 
 export const hero = {
-  headline: "Shine Beyond Gold.",
-  subline:
-    "Premium imitation gold jewellery for bridal, festive, and everyday moments — composed with restraint and lasting finish.",
-  cta: "Shop categories",
   ctaHref: "#categories",
   secondaryCta: "View pieces",
   secondaryCtaHref: "#featured",
