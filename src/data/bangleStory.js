@@ -60,7 +60,7 @@ export const bangleStoryCopy = {
     heading: "Every Bracelet Begins With A Story",
     paragraph:
       "Handcrafted with timeless elegance, designed to become part of your every celebration.",
-    primaryCta: { label: "Explore Collection", href: "#collections" },
+    primaryCta: { label: "Explore Collection", href: "#categories" },
     secondaryCta: { label: "Why Choose Us", href: "#why-choose-us" },
     caption: "Kemp Temple Bangles · 22kt gold tone",
   },

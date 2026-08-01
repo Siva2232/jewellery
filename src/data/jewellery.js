@@ -946,7 +946,7 @@ export const jhumkaStory = {
   line: "A single jhumka, suspended in light — then worn where elegance begins.",
   settleLine: "Worn where light lingers.",
   brandLine: "ORRA · Shine Beyond Gold",
-  cta: { label: "Explore Collection", href: "#collections" },
+  cta: { label: "Explore Collection", href: "#categories" },
   secondaryCta: { label: "View Details", href: "#featured" },
   jhumka: jumukkaImg,
   jhumkaAlt: "Gold temple jhumka earring",
