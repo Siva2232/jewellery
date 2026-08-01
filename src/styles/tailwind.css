@@ -224,6 +224,13 @@
   }
 }
 
+/* Mobile menu open — hide fixed story clones / chrome that sat above the nav */
+body.menu-open .story-layer {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;

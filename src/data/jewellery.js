@@ -41,12 +41,36 @@ export const categories = [
     image:
       "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1400&q=80",
     types: [
-      "Cocktail Rings",
-      "Stackable Rings",
-      "Bridal Bands",
-      "Temple Rings",
-      "Adjustable Rings",
-      "Solitaire Style",
+      {
+        name: "Cocktail Rings",
+        image:
+          "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Stackable Rings",
+        image:
+          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Bridal Bands",
+        image:
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Temple Rings",
+        image:
+          "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Adjustable Rings",
+        image:
+          "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Solitaire Style",
+        image:
+          "https://images.unsplash.com/photo-1603561596112-0a132b7576cc?auto=format&fit=crop&w=400&q=80",
+      },
     ],
   },
   {
@@ -57,12 +81,36 @@ export const categories = [
     image:
       "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1400&q=80",
     types: [
-      "Jhumkas",
-      "Studs",
-      "Chandbalis",
-      "Hoops / Balis",
-      "Danglers",
-      "Ear Cuffs",
+      {
+        name: "Jhumkas",
+        image:
+          "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Studs",
+        image:
+          "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Chandbalis",
+        image:
+          "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Hoops / Balis",
+        image:
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Danglers",
+        image:
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Ear Cuffs",
+        image:
+          "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80",
+      },
     ],
   },
   {
@@ -73,12 +121,35 @@ export const categories = [
     image:
       "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1400&q=80",
     types: [
-      "Pair Bangles",
-      "Kadas",
-      "Single Bangle",
-      "Kemp Bangles",
-      "Bridal Sets",
-      "Changeable",
+      {
+        name: "Pair Bangles",
+        image:
+          "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Kadas",
+        image:
+          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Single Bangle",
+        image:
+          "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Kemp Bangles",
+        image:
+          "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Bridal Sets",
+        image: banglesCardImg,
+      },
+      {
+        name: "Changeable",
+        image:
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80",
+      },
     ],
   },
   {
@@ -89,12 +160,36 @@ export const categories = [
     image:
       "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1400&q=80",
     types: [
-      "Short Necklaces",
-      "Long Haaram",
-      "Chokers",
-      "Layered Necklaces",
-      "Pendant Sets",
-      "Bridal Sets",
+      {
+        name: "Short Necklaces",
+        image:
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Long Haaram",
+        image:
+          "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Chokers",
+        image:
+          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Layered Necklaces",
+        image:
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Pendant Sets",
+        image:
+          "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Bridal Sets",
+        image:
+          "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80",
+      },
     ],
   },
   {
@@ -105,12 +200,36 @@ export const categories = [
     image:
       "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1400&q=80",
     types: [
-      "Kasumala",
-      "Mullamottu Mala",
-      "Oddiyanam",
-      "Kerala Jhumkas",
-      "Temple Cascades",
-      "Traditional Sets",
+      {
+        name: "Kasumala",
+        image:
+          "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Mullamottu Mala",
+        image:
+          "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Oddiyanam",
+        image:
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Kerala Jhumkas",
+        image:
+          "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Temple Cascades",
+        image:
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Traditional Sets",
+        image:
+          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&q=80",
+      },
     ],
   },
   {
@@ -121,12 +240,36 @@ export const categories = [
     image:
       "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1400&q=80",
     types: [
-      "Temple Necklaces",
-      "Temple Earrings",
-      "Temple Bangles",
-      "Goddess Motifs",
-      "Antique Finish",
-      "Bridal Temple Sets",
+      {
+        name: "Temple Necklaces",
+        image:
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Temple Earrings",
+        image:
+          "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Temple Bangles",
+        image:
+          "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Goddess Motifs",
+        image:
+          "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Antique Finish",
+        image:
+          "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Bridal Temple Sets",
+        image:
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80",
+      },
     ],
   },
   {
@@ -137,12 +280,36 @@ export const categories = [
     image:
       "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1400&q=80",
     types: [
-      "Cable Chains",
-      "Box Chains",
-      "Rope Chains",
-      "Pendant Chains",
-      "Everyday Links",
-      "Layering Chains",
+      {
+        name: "Cable Chains",
+        image:
+          "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Box Chains",
+        image:
+          "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Rope Chains",
+        image:
+          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Pendant Chains",
+        image:
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Everyday Links",
+        image:
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Layering Chains",
+        image:
+          "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=400&q=80",
+      },
     ],
   },
   {
@@ -153,12 +320,36 @@ export const categories = [
     image:
       "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=1400&q=80",
     types: [
-      "Payal / Anklets",
-      "Bridal Anklets",
-      "Bell Anklets",
-      "Chain Anklets",
-      "Toe Ring Sets",
-      "Dual Pair",
+      {
+        name: "Payal / Anklets",
+        image:
+          "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Bridal Anklets",
+        image:
+          "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Bell Anklets",
+        image:
+          "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Chain Anklets",
+        image:
+          "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Toe Ring Sets",
+        image:
+          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Dual Pair",
+        image:
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80",
+      },
     ],
   },
   {
@@ -169,12 +360,36 @@ export const categories = [
     image:
       "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1400&q=80",
     types: [
-      "Chain Bracelets",
-      "Cuffs",
-      "Charm Bracelets",
-      "Tennis Style",
-      "Kada Bracelets",
-      "Delicate Links",
+      {
+        name: "Chain Bracelets",
+        image:
+          "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Cuffs",
+        image:
+          "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Charm Bracelets",
+        image:
+          "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Tennis Style",
+        image:
+          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Kada Bracelets",
+        image:
+          "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=400&q=80",
+      },
+      {
+        name: "Delicate Links",
+        image:
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80",
+      },
     ],
   },
 ];
