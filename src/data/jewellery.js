@@ -27,11 +27,8 @@ export const navLinks = [
   { label: "Categories", href: "#categories" },
   { label: "Pieces", href: "#featured" },
   { label: "Collections", href: "#collections" },
-  { label: "Occasions", href: "#occasions" },
-  { label: "Craft", href: "#craft" },
-  { label: "Atelier", href: "#atelier" },
-  { label: "Lookbook", href: "#lookbook" },
-  { label: "Care", href: "#care" },
+  // { label: "Occasions", href: "#occasions" },
+  { label: "Why Choose Us", href: "#why-choose-us" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -663,48 +660,6 @@ export const collections = [
   },
 ];
 
-export const craftPoints = [
-  {
-    id: "finish",
-    title: "Enduring finish",
-    description:
-      "Gold, rose, and antique tones chosen for depth — polished to catch light without glare.",
-  },
-  {
-    id: "form",
-    title: "Wearable form",
-    description:
-      "Silhouettes designed for real occasions: balanced weight, secure closures, lasting comfort.",
-  },
-  {
-    id: "detail",
-    title: "Hand-finished detail",
-    description:
-      "Motifs and stone settings refined by hand so every piece feels considered, not mass-made.",
-  },
-];
-
-export const craft = {
-  eyebrow: "The craft",
-  headline: "Heritage forms. Modern restraint.",
-  image:
-    "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1600&q=80",
-  imageAlt: "ORRA craftsmanship detail",
-  quote: "Every piece is finished to hold light — never to shout.",
-  stats: [
-    { value: "3", label: "Signature finishes" },
-    { value: "100%", label: "Hand inspected" },
-    { value: "ORRA", label: "Atelier standard" },
-  ],
-};
-
-export const lookbook = {
-  title: "Worn in the light",
-  subtitle: "Editorial stillness — jewellery as atmosphere",
-  image:
-    "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=2000&q=80",
-};
-
 export const occasions = [
   {
     id: "bridal-morning",
@@ -729,46 +684,45 @@ export const occasions = [
   },
 ];
 
-export const atelier = {
-  eyebrow: "The atelier",
-  headline: "Where form finds finish",
-  body: brand.about,
-  secondary: brand.aboutSecondary,
-  image:
-    "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=1600&q=80",
+export const whyChooseUs = {
+  eyebrow: "Why choose us",
+  headline: "Elegance that lasts",
+  description:
+    "ORRA is built for occasions that matter — premium imitation gold with heritage craft, wearable comfort, and a finish that holds its light.",
+  motto: "Shine Beyond Gold",
+  quote: "Every piece is finished to hold light — never to shout.",
+  points: [
+    {
+      id: "finish",
+      title: "Premium gold-tone finish",
+      description:
+        "Deep, lasting tones chosen to catch light without glare — polished for bridal, festive, and everyday wear.",
+    },
+    {
+      id: "craft",
+      title: "Hand-finished detail",
+      description:
+        "Temple motifs, stone settings, and forms refined by hand so every piece feels considered, not mass-made.",
+    },
+    {
+      id: "wear",
+      title: "Made to be worn",
+      description:
+        "Balanced weight, secure closures, and comfort designed for real celebrations — not just the photoshoot.",
+    },
+    {
+      id: "trust",
+      title: "Private enquiry first",
+      description:
+        "From our Cochin studio, we guide you by WhatsApp — quiet advice, clear options, no pressure.",
+    },
+  ],
   stats: [
     { value: "Cochin", label: "Studio city" },
-    { value: "Hand", label: "Finished detail" },
-    { value: "Private", label: "Enquiry first" },
+    { value: "100%", label: "Hand inspected" },
+    { value: "ORRA", label: "Atelier standard" },
   ],
 };
-
-export const careSteps = [
-  {
-    id: "store",
-    title: "Store apart",
-    description:
-      "Keep each piece in its pouch — soft lining, no tangles, no surface marks.",
-  },
-  {
-    id: "wear",
-    title: "Wear last",
-    description:
-      "Apply perfume and lotions first. Jewellery goes on after, and comes off first.",
-  },
-  {
-    id: "clean",
-    title: "Wipe gently",
-    description:
-      "A dry, soft cloth is enough. Avoid harsh chemicals, water soaks, and abrasives.",
-  },
-  {
-    id: "rest",
-    title: "Rest between wears",
-    description:
-      "Give finishes time between occasions — lasting shine prefers patience.",
-  },
-];
 
 export const jhumkaStory = {
   brand: "ORRA",

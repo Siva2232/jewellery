@@ -61,7 +61,7 @@ export const bangleStoryCopy = {
     paragraph:
       "Handcrafted with timeless elegance, designed to become part of your every celebration.",
     primaryCta: { label: "Explore Collection", href: "#collections" },
-    secondaryCta: { label: "View Craftsmanship", href: "#craft" },
+    secondaryCta: { label: "Why Choose Us", href: "#why-choose-us" },
     caption: "Kemp Temple Bangles · 22kt gold tone",
   },
 };

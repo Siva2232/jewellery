@@ -232,3 +232,49 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* ── Zoom + lift toward screen (Categories) ─────────────────────────────── */
+
+.bulge-scene {
+  perspective: 1000px;
+  perspective-origin: 50% 40%;
+}
+
+.bulge-stage {
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+
+.bulge-layer {
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: 50% 50%;
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.5s ease,
+    box-shadow 0.5s ease;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.bulge-layer.is-bulging {
+  filter: brightness(1.07) contrast(1.04) saturate(1.06);
+  box-shadow:
+    0 32px 64px -20px rgba(20, 17, 15, 0.58),
+    0 12px 28px rgba(201, 169, 110, 0.16);
+}
+
+.bulge-glow {
+  transition: opacity 0.4s ease;
+  mix-blend-mode: screen;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bulge-layer {
+    transition: none;
+  }
+
+  .bulge-layer.is-bulging {
+    filter: none;
+    box-shadow: none;
+  }
+}

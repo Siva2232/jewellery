@@ -9,6 +9,7 @@ import {
 } from "../../data/bangleStory";
 import { formatPrice, scrollToId } from "../../utils/helpers";
 import useBangleStory from "../../hooks/useBangleStory";
+import useBulge3D from "../../hooks/useBulge3D";
 
 const WRIST = bangleStoryGeometry.portrait?.wrist ?? {
   x: (400 / 1024) * 100,
@@ -27,6 +28,131 @@ const DUST = [
   { left: "2%", top: "50%", size: 2, delay: "1.4s", duration: "8.5s" },
   { left: "62%", top: "94%", size: 2.5, delay: "0.2s", duration: "7s" },
 ];
+
+function FeaturedWallCard({ piece, index, frameClass, enquire }) {
+  const isStory = Boolean(piece.isStoryPiece);
+  // Story piece stays stable for GSAP handoff; others get zoom+lift.
+  const bulge = useBulge3D({ lift: 14, popZ: 44, scale: 1.38 });
+  const enableBulge = !isStory;
+
+  return (
+    <article
+      data-wall-card
+      data-story-card={isStory || undefined}
+      className="group relative min-h-0"
+    >
+      {isStory && (
+        <span
+          aria-hidden
+          className="animate-piece-glow pointer-events-none absolute -inset-5 -z-10 rounded-full bg-champagne/35 blur-2xl"
+        />
+      )}
+
+      <a
+        href={enquire(piece.name)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative block h-full overflow-hidden bg-stone transition-[transform,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-[0_28px_56px_-24px_rgba(20,17,15,0.45)]"
+      >
+        <div
+          ref={enableBulge ? bulge.ref : undefined}
+          onMouseMove={enableBulge ? bulge.onMove : undefined}
+          onMouseLeave={enableBulge ? bulge.onLeave : undefined}
+          id={isStory ? STORY_ANCHOR : undefined}
+          data-story-frame={isStory || undefined}
+          className={`bulge-scene relative overflow-hidden ${frameClass}`}
+        >
+          <div className="bulge-stage absolute inset-0">
+            <img
+              data-story-image={isStory || undefined}
+              src={piece.image}
+              alt={piece.name}
+              loading={index < 5 ? "eager" : "lazy"}
+              decoding="async"
+              className={`absolute inset-0 h-full w-full object-cover ${
+                enableBulge ? "bulge-layer" : ""
+              } ${enableBulge && bulge.active ? "is-bulging" : ""}`}
+              style={enableBulge ? bulge.style : undefined}
+            />
+
+            {enableBulge && (
+              <>
+                <div
+                  aria-hidden
+                  className={`bulge-glow pointer-events-none absolute inset-0 ${
+                    bulge.active ? "opacity-100" : "opacity-0"
+                  }`}
+                  style={{
+                    background: `radial-gradient(circle at ${bulge.pose.x}% ${bulge.pose.y}%, rgba(221,196,154,0.26) 0%, transparent 44%)`,
+                  }}
+                />
+                <div
+                  aria-hidden
+                  className={`pointer-events-none absolute inset-0 transition-opacity duration-500 ${
+                    bulge.active ? "opacity-100" : "opacity-0"
+                  }`}
+                  style={{
+                    background: `radial-gradient(circle at ${bulge.pose.x}% ${bulge.pose.y}%, transparent 0%, transparent 30%, rgba(20,17,15,0.32) 78%)`,
+                  }}
+                />
+              </>
+            )}
+          </div>
+
+          <div
+            data-card-chrome={isStory || undefined}
+            className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-ink/10 transition-opacity duration-500 group-hover:via-ink/25"
+          />
+
+          <div
+            data-card-chrome={isStory || undefined}
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-0 ring-1 ring-inset ring-champagne/35 transition-opacity duration-500 group-hover:opacity-100"
+          />
+
+          <div
+            data-card-chrome={isStory || undefined}
+            className="absolute inset-x-0 top-0 flex items-start justify-between p-2.5 lg:p-3.5 xl:p-4"
+          >
+            <span className="font-display text-xs text-porcelain/70 lg:text-sm xl:text-base">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span className="text-[8px] tracking-[0.2em] text-champagne-light/80 uppercase opacity-0 transition-opacity duration-500 group-hover:opacity-100 lg:text-[9px]">
+              {piece.collection}
+            </span>
+          </div>
+
+          <div
+            data-card-chrome={isStory || undefined}
+            className="absolute inset-x-0 bottom-0 p-2.5 transition-transform duration-500 group-hover:-translate-y-0.5 lg:p-3.5 xl:p-4"
+          >
+            {isStory && (
+              <span className="mb-1.5 inline-block text-[8px] tracking-[0.22em] text-champagne-light uppercase lg:text-[9px]">
+                Signature story
+              </span>
+            )}
+            <h3 className="font-display text-[0.95rem] leading-tight text-porcelain sm:text-base lg:text-lg xl:text-xl">
+              {piece.name}
+            </h3>
+            <div className="mt-1.5 flex items-center justify-between gap-2">
+              <p className="text-[10px] tabular-nums tracking-wide text-champagne-light/90 lg:text-xs xl:text-sm">
+                {formatPrice(piece.price)}
+              </p>
+              <span className="flex items-center gap-1 text-[9px] tracking-[0.16em] text-porcelain/55 uppercase opacity-0 transition-all duration-500 group-hover:opacity-100">
+                Enquire
+                <ArrowUpRight
+                  size={12}
+                  strokeWidth={1.4}
+                  className="translate-y-0.5"
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </article>
+  );
+}
 
 export default function Featured() {
   const [reduce] = useState(
@@ -127,100 +253,15 @@ export default function Featured() {
           </div>
 
           <div className={`mx-auto w-full max-w-[100rem] ${cls.grid}`}>
-            {featuredPieces.map((piece, i) => {
-              const isStory = Boolean(piece.isStoryPiece);
-
-              return (
-                <article
-                  key={piece.id}
-                  data-wall-card
-                  data-story-card={isStory || undefined}
-                  className="group relative min-h-0"
-                >
-                  {isStory && (
-                    <span
-                      aria-hidden
-                      className="animate-piece-glow pointer-events-none absolute -inset-5 -z-10 rounded-full bg-champagne/35 blur-2xl"
-                    />
-                  )}
-
-                  <a
-                    href={enquire(piece.name)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative block h-full overflow-hidden bg-stone transition-[transform,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-[0_28px_56px_-24px_rgba(20,17,15,0.45)]"
-                  >
-                    <div
-                      id={isStory ? STORY_ANCHOR : undefined}
-                      data-story-frame={isStory || undefined}
-                      className={`relative overflow-hidden ${cls.frame}`}
-                    >
-                      <div className="absolute inset-0 transition-transform duration-[1.25s] ease-out group-hover:scale-[1.05]">
-                        <img
-                          data-story-image={isStory || undefined}
-                          src={piece.image}
-                          alt={piece.name}
-                          loading={i < 5 ? "eager" : "lazy"}
-                          decoding="async"
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
-                      </div>
-
-                      <div
-                        data-card-chrome={isStory || undefined}
-                        className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-ink/10 transition-opacity duration-500 group-hover:via-ink/25"
-                      />
-
-                      {/* Thin champagne edge on hover */}
-                      <div
-                        data-card-chrome={isStory || undefined}
-                        aria-hidden
-                        className="pointer-events-none absolute inset-0 opacity-0 ring-1 ring-inset ring-champagne/35 transition-opacity duration-500 group-hover:opacity-100"
-                      />
-
-                      <div
-                        data-card-chrome={isStory || undefined}
-                        className="absolute inset-x-0 top-0 flex items-start justify-between p-2.5 lg:p-3.5 xl:p-4"
-                      >
-                        <span className="font-display text-xs text-porcelain/70 lg:text-sm xl:text-base">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                        <span className="text-[8px] tracking-[0.2em] text-champagne-light/80 uppercase opacity-0 transition-opacity duration-500 group-hover:opacity-100 lg:text-[9px]">
-                          {piece.collection}
-                        </span>
-                      </div>
-
-                      <div
-                        data-card-chrome={isStory || undefined}
-                        className="absolute inset-x-0 bottom-0 p-2.5 transition-transform duration-500 group-hover:-translate-y-0.5 lg:p-3.5 xl:p-4"
-                      >
-                        {isStory && (
-                          <span className="mb-1.5 inline-block text-[8px] tracking-[0.22em] text-champagne-light uppercase lg:text-[9px]">
-                            Signature story
-                          </span>
-                        )}
-                        <h3 className="font-display text-[0.95rem] leading-tight text-porcelain sm:text-base lg:text-lg xl:text-xl">
-                          {piece.name}
-                        </h3>
-                        <div className="mt-1.5 flex items-center justify-between gap-2">
-                          <p className="text-[10px] tabular-nums tracking-wide text-champagne-light/90 lg:text-xs xl:text-sm">
-                            {formatPrice(piece.price)}
-                          </p>
-                          <span className="flex items-center gap-1 text-[9px] tracking-[0.16em] text-porcelain/55 uppercase opacity-0 transition-all duration-500 group-hover:opacity-100">
-                            Enquire
-                            <ArrowUpRight
-                              size={12}
-                              strokeWidth={1.4}
-                              className="translate-y-0.5"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                </article>
-              );
-            })}
+            {featuredPieces.map((piece, i) => (
+              <FeaturedWallCard
+                key={piece.id}
+                piece={piece}
+                index={i}
+                frameClass={cls.frame}
+                enquire={enquire}
+              />
+            ))}
           </div>
 
           {!reduce && (

@@ -4,8 +4,75 @@ import { ArrowUpRight } from "lucide-react";
 import { brand, categories, categoryPieces } from "../../data/jewellery";
 import { formatPrice } from "../../utils/helpers";
 import { easeLuxury, easeOutExpo } from "../../utils/motion";
+import useBulge3D from "../../hooks/useBulge3D";
 import RevealText from "../ui/RevealText";
 import GoldLine from "../ui/GoldLine";
+
+function PieceCard({ piece, index, href }) {
+  const bulge = useBulge3D({ lift: 16, popZ: 48, scale: 1.42 });
+
+  return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        delay: 0.1 + index * 0.06,
+        duration: 0.5,
+        ease: easeLuxury,
+      }}
+      className="group w-[38vw] max-w-[10.5rem] shrink-0 sm:w-auto sm:max-w-none"
+    >
+      <div
+        ref={bulge.ref}
+        onMouseMove={bulge.onMove}
+        onMouseLeave={bulge.onLeave}
+        className="bulge-scene relative aspect-[4/5] bg-stone ring-1 ring-transparent transition-[box-shadow,ring-color] duration-500 group-hover:shadow-[0_22px_40px_-18px_rgba(20,17,15,0.45)] group-hover:ring-champagne/30"
+      >
+        <div className="bulge-stage absolute inset-0">
+          <img
+            src={piece.image}
+            alt={piece.name}
+            loading="lazy"
+            className={`bulge-layer absolute inset-0 h-full w-full object-cover ${
+              bulge.active ? "is-bulging" : ""
+            }`}
+            style={bulge.style}
+          />
+          <div
+            aria-hidden
+            className={`bulge-glow pointer-events-none absolute inset-0 ${
+              bulge.active ? "opacity-100" : "opacity-0"
+            }`}
+            style={{
+              background: `radial-gradient(circle at ${bulge.pose.x}% ${bulge.pose.y}%, rgba(221,196,154,0.28) 0%, transparent 42%)`,
+            }}
+          />
+          <div
+            aria-hidden
+            className={`pointer-events-none absolute inset-0 transition-opacity duration-500 ${
+              bulge.active ? "opacity-100" : "opacity-0"
+            }`}
+            style={{
+              background: `radial-gradient(circle at ${bulge.pose.x}% ${bulge.pose.y}%, transparent 0%, transparent 32%, rgba(20,17,15,0.35) 78%)`,
+            }}
+          />
+        </div>
+      </div>
+      <p className="mt-2.5 font-display text-[0.95rem] leading-snug text-ink sm:mt-3 sm:text-lg">
+        {piece.name}
+      </p>
+      <p className="mt-0.5 truncate text-[9px] tracking-[0.12em] text-champagne-deep uppercase sm:text-[10px]">
+        {piece.type}
+      </p>
+      <p className="mt-1 text-[11px] tracking-wide text-ink-muted">
+        {formatPrice(piece.price)}
+      </p>
+    </motion.a>
+  );
+}
 
 export default function Categories() {
   const [activeId, setActiveId] = useState(categories[0].id);
@@ -40,6 +107,8 @@ export default function Categories() {
     `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
       `Hi ${brand.name} — I'd like to explore your ${active.name} collection.`
     )}`;
+
+  const heroBulge = useBulge3D({ lift: 18, popZ: 52, scale: 1.18 });
 
   return (
     <section id="categories" className="relative overflow-x-hidden bg-porcelain">
@@ -187,25 +256,61 @@ export default function Categories() {
               transition={{ duration: 0.45, ease: easeLuxury }}
               className="grid min-w-0 gap-7 md:gap-8 xl:grid-cols-[1.05fr_0.95fr] xl:gap-10"
             >
-              {/* Hero image */}
-              <div className="relative min-w-0 overflow-hidden bg-ink">
-                <div className="relative aspect-[4/5] w-full sm:aspect-[5/4] lg:aspect-[4/5] xl:min-h-[560px] xl:aspect-auto">
+              {/* Hero — 3D bulge pops toward the screen under the cursor */}
+              <div
+                ref={heroBulge.ref}
+                onMouseMove={heroBulge.onMove}
+                onMouseLeave={heroBulge.onLeave}
+                className="bulge-scene relative min-w-0 cursor-crosshair bg-ink"
+              >
+                <div className="bulge-stage relative aspect-[4/5] w-full sm:aspect-[5/4] lg:aspect-[4/5] xl:min-h-[560px] xl:aspect-auto">
                   <AnimatePresence mode="sync" initial={false}>
-                    <motion.img
+                    <motion.div
                       key={active.image}
-                      src={active.image}
-                      alt={active.name}
-                      className="absolute inset-0 h-full w-full object-cover"
-                      initial={{ scale: 1.08, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 1.02, opacity: 0 }}
-                      transition={{ duration: 0.9, ease: easeLuxury }}
-                    />
+                      className="absolute inset-0"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.75, ease: easeLuxury }}
+                    >
+                      <img
+                        src={active.image}
+                        alt={active.name}
+                        className={`bulge-layer absolute inset-0 h-full w-full object-cover ${
+                          heroBulge.active ? "is-bulging" : ""
+                        }`}
+                        style={heroBulge.style}
+                      />
+                    </motion.div>
                   </AnimatePresence>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent" />
+                  <div
+                    aria-hidden
+                    className={`bulge-glow pointer-events-none absolute inset-0 transition-opacity duration-500 ${
+                      heroBulge.active ? "opacity-100" : "opacity-0"
+                    }`}
+                    style={{
+                      background: `radial-gradient(circle at ${heroBulge.pose.x}% ${heroBulge.pose.y}%, rgba(221,196,154,0.32) 0%, transparent 45%)`,
+                    }}
+                  />
 
-                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8 md:p-10">
+                  <div
+                    aria-hidden
+                    className={`pointer-events-none absolute inset-0 transition-opacity duration-500 ${
+                      heroBulge.active ? "opacity-100" : "opacity-0"
+                    }`}
+                    style={{
+                      background: `radial-gradient(circle at ${heroBulge.pose.x}% ${heroBulge.pose.y}%, transparent 0%, transparent 26%, rgba(20,17,15,0.38) 75%)`,
+                    }}
+                  />
+
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
+
+                  <div
+                    className={`pointer-events-none absolute inset-x-0 bottom-0 p-5 transition-transform duration-700 sm:p-8 md:p-10 ${
+                      heroBulge.active ? "-translate-y-1.5" : ""
+                    }`}
+                  >
                     <p className="text-[9px] tracking-[0.28em] text-champagne-light uppercase sm:text-[10px]">
                       {active.count} curated pieces
                     </p>
@@ -217,7 +322,7 @@ export default function Categories() {
                     </p>
                   </div>
 
-                  <div className="absolute top-4 right-4 hidden items-center gap-2 sm:flex md:top-8 md:right-8">
+                  <div className="pointer-events-none absolute top-4 right-4 hidden items-center gap-2 sm:flex md:top-8 md:right-8">
                     <span className="h-px w-8 bg-champagne/70" />
                     <span className="text-[10px] tracking-[0.28em] text-porcelain/70 uppercase">
                       {brand.tagline}
@@ -309,38 +414,12 @@ export default function Categories() {
 
                   <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1 scrollbar-none sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0">
                     {pieces.slice(0, 3).map((piece, i) => (
-                      <motion.a
+                      <PieceCard
                         key={piece.id}
+                        piece={piece}
+                        index={i}
                         href={enquire(piece.name)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        initial={{ opacity: 0, y: 14 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          delay: 0.1 + i * 0.06,
-                          duration: 0.5,
-                          ease: easeLuxury,
-                        }}
-                        className="group w-[38vw] max-w-[10.5rem] shrink-0 sm:w-auto sm:max-w-none"
-                      >
-                        <div className="relative aspect-[4/5] overflow-hidden bg-stone">
-                          <img
-                            src={piece.image}
-                            alt={piece.name}
-                            loading="lazy"
-                            className="h-full w-full object-cover transition-transform duration-[1.1s] ease-out group-hover:scale-105"
-                          />
-                        </div>
-                        <p className="mt-2.5 font-display text-[0.95rem] leading-snug text-ink sm:mt-3 sm:text-lg">
-                          {piece.name}
-                        </p>
-                        <p className="mt-0.5 truncate text-[9px] tracking-[0.12em] text-champagne-deep uppercase sm:text-[10px]">
-                          {piece.type}
-                        </p>
-                        <p className="mt-1 text-[11px] tracking-wide text-ink-muted">
-                          {formatPrice(piece.price)}
-                        </p>
-                      </motion.a>
+                      />
                     ))}
                   </div>
                 </div>
